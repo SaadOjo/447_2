@@ -24,7 +24,7 @@ ARM Macro Assembler    Page 1
    14 00000000                 EXPORT           __main
    15 00000000                 ENTRY
    16 00000000         __main
-   17 00000000 4C0A            LDR              R4, =STORE_ADDR ;Initialise poi
+   17 00000000 4C0B            LDR              R4, =STORE_ADDR ;Initialise poi
                                                             nter at starting ad
                                                             dress
    18 00000002 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
@@ -36,42 +36,42 @@ ARM Macro Assembler    Page 1
    21 0000000A F7FF FFFE       BL               pwmInit
    22 0000000E F7FF FFFE       BL               initialize
    23 00000012         
-   24 00000012         ;BL checkButton  ;BUSY WAIT
-   25 00000012         
-   26 00000012 2D00    loop1   CMP              R5,#0       ;
-   27 00000014 D002            BEQ              playback    ;
-   28 00000016 F7FF FFFE       BL               readAndStore
-   29 0000001A E7FA            B                loop1
-   30 0000001C         
-   31 0000001C 4C03    playback
+   24 00000012 F7FF FFFE       BL               checkButton ;BUSY WAIT
+   25 00000016         
+   26 00000016 2D00    loop1   CMP              R5,#0       ;
+   27 00000018 D002            BEQ              playback    ;
+   28 0000001A F7FF FFFE       BL               readAndStore
+   29 0000001E E7FA            B                loop1
+   30 00000020         
+   31 00000020 4C03    playback
                                LDR              R4, =STORE_ADDR ;Reset the poin
                                                             ter address
-   32 0000001E F645 55C0       MOV              R5, #NO_SAMPLES ;Set the counte
+   32 00000022 F645 55C0       MOV              R5, #NO_SAMPLES ;Set the counte
                                                             r for writing the d
                                                             ata
-   33 00000022         
-   34 00000022 F7FF FFFE       BL               init_i2c    ;
-   35 00000026         
-   36 00000026         
-   37 00000026         ;loopy   BL writeToDac  ;
-   38 00000026         ;    SUB R5,#1   ;
-   39 00000026         ;    CMP R5,#0   ;
-   40 00000026         ;    BNE loopy   ;
-   41 00000026         
-   42 00000026 F7FF FFFE       BL               InitSysTick ;
-   43 0000002A         
-   44 0000002A         ;Should go to subroutine
-   45 0000002A         
-   46 0000002A         
+   33 00000026         
+   34 00000026 F7FF FFFE       BL               init_i2c    ;
+   35 0000002A         
+   36 0000002A         
+   37 0000002A         ;loopy   BL writeToDac  ;
+   38 0000002A         ;    SUB R5,#1   ;
+   39 0000002A         ;    CMP R5,#0   ;
+   40 0000002A         ;    BNE loopy   ;
+   41 0000002A         
+   42 0000002A F7FF FFFE       BL               InitSysTick ;
+   43 0000002E         
+   44 0000002E         ;Should go to subroutine
+   45 0000002E         
+   46 0000002E         
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   47 0000002A E7FE    DONE    B                DONE
-   48 0000002C                 ALIGN
-   49 0000002C                 END
+   47 0000002E E7FE    DONE    B                DONE
+   48 00000030                 ALIGN
+   49 00000030                 END
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\Keil
@@ -84,7 +84,7 @@ predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-DONE 0000002A
+DONE 0000002E
 
 Symbol: DONE
    Definitions
@@ -100,7 +100,7 @@ Symbol: __main
    Uses
       At line 14 in file main.s
 Comment: __main used once
-loop1 00000012
+loop1 00000016
 
 Symbol: loop1
    Definitions
@@ -116,7 +116,7 @@ Symbol: main
    Uses
       None
 Comment: main unused
-playback 0000001C
+playback 00000020
 
 Symbol: playback
    Definitions
@@ -170,8 +170,8 @@ Symbol: checkButton
    Definitions
       At line 10 in file main.s
    Uses
-      None
-Comment: checkButton unused
+      At line 24 in file main.s
+Comment: checkButton used once
 clockChange 00000000
 
 Symbol: clockChange

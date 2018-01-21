@@ -86,168 +86,184 @@ ARM Macro Assembler    Page 2
    28 00000000 40025400 
                        PORTF_GPIODIR
                                EQU              0x40025400  ; Direction
-   29 00000000         
+   29 00000000 40025510 
+                       PORTF_GPIOPUR
+                               EQU              0x40025510  ;
    30 00000000         
    31 00000000         
    32 00000000         
-   33 00000000         ;label   directive   value   comment
-   34 00000000                 AREA             InitializeRoutine,CODE,READONLY
-   35 00000000                 THUMB
-   36 00000000                 EXPORT           initialize
-   37 00000000         
-   38 00000000         initialize
+   33 00000000         
+   34 00000000         ;label   directive   value   comment
+   35 00000000                 AREA             InitializeRoutine,CODE,READONLY
+   36 00000000                 THUMB
+   37 00000000                 EXPORT           initialize
+   38 00000000         
+   39 00000000         initialize
                                PROC
-   39 00000000         
-   40 00000000 B503            PUSH{LR,R1,R0}
-   41 00000002         
-   42 00000002         ; Start clocks for features to be used
-   43 00000002 492C            LDR              R1, =RCGCADC 
+   40 00000000         
+   41 00000000 B503            PUSH{LR,R1,R0}
+   42 00000002         
+   43 00000002         ; Start clocks for features to be used
+   44 00000002 492E            LDR              R1, =RCGCADC 
                                                             ; Turn on ADC clock
                                                             
-   44 00000004 6808            LDR              R0, [R1]
-   45 00000006 F040 0001       ORR              R0, R0, #0x01 ; set bit 0 to en
+   45 00000004 6808            LDR              R0, [R1]
+   46 00000006 F040 0001       ORR              R0, R0, #0x01 ; set bit 0 to en
                                                             able ADC0 clock
-   46 0000000A 6008            STR              R0, [R1]
-   47 0000000C BF00            NOP
-   48 0000000E BF00            NOP
-   49 00000010 BF00            NOP                          ; Let clock stabili
+   47 0000000A 6008            STR              R0, [R1]
+   48 0000000C BF00            NOP
+   49 0000000E BF00            NOP
+   50 00000010 BF00            NOP                          ; Let clock stabili
                                                             ze
-   50 00000012 4929            LDR              R1, =RCGCGPIO ; Turn on GPIO cl
+   51 00000012 492B            LDR              R1, =RCGCGPIO ; Turn on GPIO cl
                                                             ock
-   51 00000014 6808            LDR              R0, [R1]
-   52 00000016 F040 0030       ORR              R0, R0, #0x30 ; set bit 4 and 5
+   52 00000014 6808            LDR              R0, [R1]
+   53 00000016 F040 0030       ORR              R0, R0, #0x30 ; set bit 4 and 5
                                                              to enable port E a
                                                             nd port F clock
-   53 0000001A 6008            STR              R0, [R1]
-   54 0000001C BF00            NOP
-   55 0000001E BF00            NOP
-   56 00000020 BF00            NOP                          ; Let clock stabili
+   54 0000001A 6008            STR              R0, [R1]
+   55 0000001C BF00            NOP
+   56 0000001E BF00            NOP
+   57 00000020 BF00            NOP                          ; Let clock stabili
                                                             ze
-   57 00000022         
-   58 00000022         ; Setup GPIO to make PE3 input for ADC0
-   59 00000022         ; Enable alternate functions
-   60 00000022 4926            LDR              R1, =PORTE_AFSEL
-   61 00000024 6808            LDR              R0, [R1]
+   58 00000022         
+   59 00000022         ; Setup GPIO to make PE3 input for ADC0
 
 
 
 ARM Macro Assembler    Page 3 
 
 
-   62 00000026 F040 0008       ORR              R0, R0, #0x08 ; set bit 3 to en
+   60 00000022         ; Enable alternate functions
+   61 00000022 4928            LDR              R1, =PORTE_AFSEL
+   62 00000024 6808            LDR              R0, [R1]
+   63 00000026 F040 0008       ORR              R0, R0, #0x08 ; set bit 3 to en
                                                             able alt functions 
                                                             on PE3
-   63 0000002A 6008            STR              R0, [R1]
-   64 0000002C         ; PCTL does not have to be configured
-   65 0000002C         ; since ADC0 is automatically selected when
-   66 0000002C         ; port pin is set to analog.
-   67 0000002C         ; Disable digital on PE3
-   68 0000002C         
-   69 0000002C 4924            LDR              R1, =PORTE_DEN
-   70 0000002E 6808            LDR              R0, [R1]
-   71 00000030 F020 0008       BIC              R0, R0, #0x08 ; clear bit 3 to 
+   64 0000002A 6008            STR              R0, [R1]
+   65 0000002C         ; PCTL does not have to be configured
+   66 0000002C         ; since ADC0 is automatically selected when
+   67 0000002C         ; port pin is set to analog.
+   68 0000002C         ; Disable digital on PE3
+   69 0000002C         
+   70 0000002C 4926            LDR              R1, =PORTE_DEN
+   71 0000002E 6808            LDR              R0, [R1]
+   72 00000030 F020 0008       BIC              R0, R0, #0x08 ; clear bit 3 to 
                                                             disable analog on P
                                                             E3
-   72 00000034 6008            STR              R0, [R1]
-   73 00000036         
-   74 00000036         ; Enable analog on PE3
-   75 00000036 4923            LDR              R1, =PORTE_AMSEL
-   76 00000038 6808            LDR              R0, [R1]
-   77 0000003A F040 0008       ORR              R0, R0, #0x08 ; set bit 3 to en
+   73 00000034 6008            STR              R0, [R1]
+   74 00000036         
+   75 00000036         ; Enable analog on PE3
+   76 00000036 4925            LDR              R1, =PORTE_AMSEL
+   77 00000038 6808            LDR              R0, [R1]
+   78 0000003A F040 0008       ORR              R0, R0, #0x08 ; set bit 3 to en
                                                             able analog on PE3
-   78 0000003E 6008            STR              R0, [R1]
-   79 00000040         
-   80 00000040         ;Configure Port PB4 for switch input
-   81 00000040         
-   82 00000040 4921            LDR              R1, =PORTF_DEN
-   83 00000042 6808            LDR              R0, [R1]
-   84 00000044 F040 0010       ORR              R0, R0, #0x10 ; set bit 4 to en
+   79 0000003E 6008            STR              R0, [R1]
+   80 00000040         
+   81 00000040         ;Configure Port PB4 for switch input
+   82 00000040         
+   83 00000040 4923            LDR              R1, =PORTF_DEN
+   84 00000042 6808            LDR              R0, [R1]
+   85 00000044 F040 0010       ORR              R0, R0, #0x10 ; set bit 4 to en
                                                             able analog on PF4
-   85 00000048 6008            STR              R0, [R1]
-   86 0000004A         ; Enable analog on PE3
-   87 0000004A 4920            LDR              R1, =PORTF_AMSEL
-   88 0000004C 6808            LDR              R0, [R1]
-   89 0000004E F020 0010       BIC              R0, R0, #0x10 ; clear bit 4 to 
+   86 00000048 6008            STR              R0, [R1]
+   87 0000004A         ; Enable analog on PE3
+   88 0000004A 4922            LDR              R1, =PORTF_AMSEL
+   89 0000004C 6808            LDR              R0, [R1]
+   90 0000004E F020 0010       BIC              R0, R0, #0x10 ; clear bit 4 to 
                                                             disable analog on P
                                                             F4
-   90 00000052 6008            STR              R0, [R1]
-   91 00000054         
-   92 00000054 491E            LDR              R1, =PORTF_GPIODIR
-   93 00000056 6808            LDR              R0, [R1]
-   94 00000058 F020 0010       BIC              R0, R0, #0x10 ; clear bit 4 mak
+   91 00000052 6008            STR              R0, [R1]
+   92 00000054         
+   93 00000054 4920            LDR              R1, =PORTF_GPIODIR
+   94 00000056 6808            LDR              R0, [R1]
+   95 00000058 F020 0010       BIC              R0, R0, #0x10 ; clear bit 4 mak
                                                             e input
-   95 0000005C 6008            STR              R0, [R1]
-   96 0000005E         
+   96 0000005C 6008            STR              R0, [R1]
    97 0000005E         
-   98 0000005E         
-   99 0000005E         
-  100 0000005E         ; Disable sequencer while ADC setup
-  101 0000005E 491D            LDR              R1, =ADC0_ACTSS
-  102 00000060 6808            LDR              R0, [R1]
-  103 00000062 F020 0008       BIC              R0, R0, #0x08 ; clear bit 3 to 
-                                                            disable seq 3
-  104 00000066 6008            STR              R0, [R1]
+   98 0000005E 491F            LDR              R1, =PORTF_GPIOPUR
+   99 00000060 6808            LDR              R0, [R1]
+  100 00000062 F040 0010       ORR              R0, R0, #0x10 ; pull up PF4 for
+                                                             switch
+  101 00000066 6008            STR              R0, [R1]
+  102 00000068         
+  103 00000068         
+  104 00000068         
   105 00000068         
-  106 00000068         ; Select PWM generator's PWM module
-  107 00000068 491B            LDR              R1, =ADC0_TTSSEL
-  108 0000006A 6808            LDR              R0, [R1]
-  109 0000006C F020 0030       BIC              R0, R0, #0x30 ; select PWM zero
-                                                             for generator zero
+  106 00000068         
+  107 00000068         ; Disable sequencer while ADC setup
+  108 00000068 491D            LDR              R1, =ADC0_ACTSS
 
 
 
 ARM Macro Assembler    Page 4 
 
 
+  109 0000006A 6808            LDR              R0, [R1]
+  110 0000006C F020 0008       BIC              R0, R0, #0x08 ; clear bit 3 to 
+                                                            disable seq 3
+  111 00000070 6008            STR              R0, [R1]
+  112 00000072         
+  113 00000072         ; Select PWM generator's PWM module
+  114 00000072 491C            LDR              R1, =ADC0_TTSSEL
+  115 00000074 6808            LDR              R0, [R1]
+  116 00000076 F020 0030       BIC              R0, R0, #0x30 ; select PWM zero
+                                                             for generator zero
                                                              
-  110 00000070 6008            STR              R0, [R1]
-  111 00000072         
-  112 00000072         ; Select trigger source
-  113 00000072 491A            LDR              R1, =ADC0_EMUX
-  114 00000074 6808            LDR              R0, [R1]
-  115 00000076 F420 4070       BIC              R0, R0, #0xF000 
+  117 0000007A 6008            STR              R0, [R1]
+  118 0000007C         
+  119 0000007C         ; Select trigger source
+  120 0000007C 491A            LDR              R1, =ADC0_EMUX
+  121 0000007E 6808            LDR              R0, [R1]
+  122 00000080 F420 4070       BIC              R0, R0, #0xF000 
                                                             ; clear bits 15:12 
                                                             
-  116 0000007A F440 40C0       ORR              R0, R0, #0x6000 ; Use PWM gener
+  123 00000084 F440 40C0       ORR              R0, R0, #0x6000 ; Use PWM gener
                                                             ator 0 for triggeri
                                                             ng
-  117 0000007E 6008            STR              R0, [R1]
-  118 00000080         
-  119 00000080         ; Select input channel
-  120 00000080 4917            LDR              R1, =ADC0_SSMUX3
-  121 00000082 6808            LDR              R0, [R1]
-  122 00000084 F020 000F       BIC              R0, R0, #0x000F ; clear bits 3:
+  124 00000088 6008            STR              R0, [R1]
+  125 0000008A         
+  126 0000008A         ; Select input channel
+  127 0000008A 4918            LDR              R1, =ADC0_SSMUX3
+  128 0000008C 6808            LDR              R0, [R1]
+  129 0000008E F020 000F       BIC              R0, R0, #0x000F ; clear bits 3:
                                                             0 to select AIN0
-  123 00000088 6008            STR              R0, [R1]
-  124 0000008A         ; Config sample sequence
-  125 0000008A 4916            LDR              R1, =ADC0_SSCTL3
-  126 0000008C 6808            LDR              R0, [R1]
-  127 0000008E F040 0006       ORR              R0, R0, #0x06 ; set bit 1 (END0
+  130 00000092 6008            STR              R0, [R1]
+  131 00000094         ; Config sample sequence
+  132 00000094 4916            LDR              R1, =ADC0_SSCTL3
+  133 00000096 6808            LDR              R0, [R1]
+  134 00000098 F040 0006       ORR              R0, R0, #0x06 ; set bit 1 (END0
                                                             ) ?EN
-  128 00000092 6008            STR              R0, [R1]
-  129 00000094         ; Set sample rate
-  130 00000094 4910            LDR              R1, =ADC0_PP
-  131 00000096 6808            LDR              R0, [R1]
-  132 00000098 F020 000F       BIC              R0, #0x0F   ; 
-  133 0000009C F040 0001       ORR              R0, R0, #0x01 ; set bits 3:0 to
+  135 0000009C 6008            STR              R0, [R1]
+  136 0000009E         ; Set sample rate
+  137 0000009E 4911            LDR              R1, =ADC0_PP
+  138 000000A0 6808            LDR              R0, [R1]
+  139 000000A2 F020 000F       BIC              R0, #0x0F   ; 
+  140 000000A6 F040 0001       ORR              R0, R0, #0x01 ; set bits 3:0 to
                                                              1 for 125k sps
-  134 000000A0 6008            STR              R0, [R1]
-  135 000000A2         ; Done with setup, enable sequencer
-  136 000000A2 490C            LDR              R1, =ADC0_ACTSS
-  137 000000A4 6808            LDR              R0, [R1]
-  138 000000A6 F040 0008       ORR              R0, R0, #0x08 ; set bit 3 to en
+  141 000000AA 6008            STR              R0, [R1]
+  142 000000AC         ; Done with setup, enable sequencer
+  143 000000AC 490C            LDR              R1, =ADC0_ACTSS
+  144 000000AE 6808            LDR              R0, [R1]
+  145 000000B0 F040 0008       ORR              R0, R0, #0x08 ; set bit 3 to en
                                                             able seq 3
-  139 000000AA 6008            STR              R0, [R1]    ; sampling enabled 
+  146 000000B4 6008            STR              R0, [R1]    ; sampling enabled 
                                                             but not initiated y
                                                             et
-  140 000000AC         
-  141 000000AC E8BD 4003       POP{LR,R1,R0}
-  142 000000B0 4770            BX               LR
-  143 000000B2                 ENDP
-  144 000000B2         
-  145 000000B2 00 00           ALIGN
-  146 000000B4                 END
+  147 000000B6         
+  148 000000B6 E8BD 4003       POP{LR,R1,R0}
+  149 000000BA 4770            BX               LR
+  150 000000BC                 ENDP
+  151 000000BC         
+  152 000000BC                 ALIGN
+  153 000000BC                 END
               400FE638 
+
+
+
+ARM Macro Assembler    Page 5 
+
+
               400FE608 
               40024420 
               4002451C 
@@ -255,15 +271,10 @@ ARM Macro Assembler    Page 4
               4002551C 
               40025528 
               40025400 
+              40025510 
               40038000 
               40038FC4 
               40038014 
-
-
-
-ARM Macro Assembler    Page 5 
-
-
               400380A0 
               400380A4 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
@@ -282,7 +293,7 @@ InitializeRoutine 00000000
 
 Symbol: InitializeRoutine
    Definitions
-      At line 34 in file codes\initialize.s
+      At line 35 in file codes\initialize.s
    Uses
       None
 Comment: InitializeRoutine unused
@@ -290,9 +301,9 @@ initialize 00000000
 
 Symbol: initialize
    Definitions
-      At line 38 in file codes\initialize.s
+      At line 39 in file codes\initialize.s
    Uses
-      At line 36 in file codes\initialize.s
+      At line 37 in file codes\initialize.s
 Comment: initialize used once
 2 symbols
 
@@ -307,8 +318,8 @@ Symbol: ADC0_ACTSS
    Definitions
       At line 5 in file codes\initialize.s
    Uses
-      At line 101 in file codes\initialize.s
-      At line 136 in file codes\initialize.s
+      At line 108 in file codes\initialize.s
+      At line 143 in file codes\initialize.s
 
 ADC0_EMUX 40038014
 
@@ -316,7 +327,7 @@ Symbol: ADC0_EMUX
    Definitions
       At line 9 in file codes\initialize.s
    Uses
-      At line 113 in file codes\initialize.s
+      At line 120 in file codes\initialize.s
 Comment: ADC0_EMUX used once
 ADC0_IM 40038008
 
@@ -340,7 +351,7 @@ Symbol: ADC0_PP
    Definitions
       At line 14 in file codes\initialize.s
    Uses
-      At line 130 in file codes\initialize.s
+      At line 137 in file codes\initialize.s
 Comment: ADC0_PP used once
 ADC0_PSSI 40038028
 
@@ -370,7 +381,7 @@ Symbol: ADC0_SSCTL3
    Definitions
       At line 12 in file codes\initialize.s
    Uses
-      At line 125 in file codes\initialize.s
+      At line 132 in file codes\initialize.s
 Comment: ADC0_SSCTL3 used once
 ADC0_SSFIFO3 400380A8
 
@@ -386,7 +397,7 @@ Symbol: ADC0_SSMUX3
    Definitions
       At line 11 in file codes\initialize.s
    Uses
-      At line 120 in file codes\initialize.s
+      At line 127 in file codes\initialize.s
 Comment: ADC0_SSMUX3 used once
 ADC0_TTSSEL 40038FC4
 
@@ -394,7 +405,7 @@ Symbol: ADC0_TTSSEL
    Definitions
       At line 15 in file codes\initialize.s
    Uses
-      At line 107 in file codes\initialize.s
+      At line 114 in file codes\initialize.s
 Comment: ADC0_TTSSEL used once
 PORTE_AFSEL 40024420
 
@@ -402,7 +413,7 @@ Symbol: PORTE_AFSEL
    Definitions
       At line 22 in file codes\initialize.s
    Uses
-      At line 60 in file codes\initialize.s
+      At line 61 in file codes\initialize.s
 Comment: PORTE_AFSEL used once
 PORTE_AMSEL 40024528
 
@@ -410,7 +421,7 @@ Symbol: PORTE_AMSEL
    Definitions
       At line 23 in file codes\initialize.s
    Uses
-      At line 75 in file codes\initialize.s
+      At line 76 in file codes\initialize.s
 Comment: PORTE_AMSEL used once
 PORTE_DEN 4002451C
 
@@ -418,7 +429,7 @@ Symbol: PORTE_DEN
    Definitions
       At line 20 in file codes\initialize.s
    Uses
-      At line 69 in file codes\initialize.s
+      At line 70 in file codes\initialize.s
 Comment: PORTE_DEN used once
 PORTE_PCTL 4002452C
 
@@ -440,7 +451,7 @@ Symbol: PORTF_AMSEL
    Definitions
       At line 27 in file codes\initialize.s
    Uses
-      At line 87 in file codes\initialize.s
+      At line 88 in file codes\initialize.s
 Comment: PORTF_AMSEL used once
 PORTF_DEN 4002551C
 
@@ -448,7 +459,7 @@ Symbol: PORTF_DEN
    Definitions
       At line 26 in file codes\initialize.s
    Uses
-      At line 82 in file codes\initialize.s
+      At line 83 in file codes\initialize.s
 Comment: PORTF_DEN used once
 PORTF_GPIODIR 40025400
 
@@ -456,15 +467,23 @@ Symbol: PORTF_GPIODIR
    Definitions
       At line 28 in file codes\initialize.s
    Uses
-      At line 92 in file codes\initialize.s
+      At line 93 in file codes\initialize.s
 Comment: PORTF_GPIODIR used once
+PORTF_GPIOPUR 40025510
+
+Symbol: PORTF_GPIOPUR
+   Definitions
+      At line 29 in file codes\initialize.s
+   Uses
+      At line 98 in file codes\initialize.s
+Comment: PORTF_GPIOPUR used once
 RCGCADC 400FE638
 
 Symbol: RCGCADC
    Definitions
       At line 2 in file codes\initialize.s
    Uses
-      At line 43 in file codes\initialize.s
+      At line 44 in file codes\initialize.s
 Comment: RCGCADC used once
 RCGCGPIO 400FE608
 
@@ -472,7 +491,7 @@ Symbol: RCGCGPIO
    Definitions
       At line 18 in file codes\initialize.s
    Uses
-      At line 50 in file codes\initialize.s
+      At line 51 in file codes\initialize.s
 Comment: RCGCGPIO used once
-20 symbols
-358 symbols in table
+21 symbols
+359 symbols in table

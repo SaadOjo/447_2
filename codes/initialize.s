@@ -26,6 +26,7 @@ PORTE_AMSEL 	EQU 0x40024528 ; Enable analog
 PORTF_DEN 		EQU 0x4002551C ; Digital Enable
 PORTF_AMSEL 	EQU 0x40025528 ; Enable analog
 PORTF_GPIODIR 	EQU 0x40025400 ; Direction
+PORTF_GPIOPUR	EQU 0x40025510 ;
 	
 	
 	
@@ -93,6 +94,12 @@ initialize	PROC
 				LDR R0, [R1]
 				BIC R0, R0, #0x10 ; clear bit 4 make input
 				STR R0, [R1]
+				
+				LDR R1, =PORTF_GPIOPUR
+				LDR R0, [R1]
+				ORR R0, R0, #0x10 ; pull up PF4 for switch
+				STR R0, [R1]
+				
 				
 				
 				

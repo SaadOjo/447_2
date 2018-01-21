@@ -21,7 +21,7 @@ __main
 				BL	pwmInit
 				BL	initialize
 				
-				;BL checkButton		;BUSY WAIT
+				BL checkButton		;BUSY WAIT
 				
 loop1			CMP	R5,#0;
 				BEQ playback;

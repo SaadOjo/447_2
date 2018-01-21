@@ -24,7 +24,7 @@ ONLY
                                LDR              R0, =PF4_READ ;Put the address 
                                                             of the PB4
    14 00000004 6801            LDR              R1,[R0]     ;
-   15 00000006 B901            CBNZ             R1, return  ;
+   15 00000006 B101            CBZ              R1, return  ;
    16 00000008 E7FB            B                POLL_AGAIN  ;
    17 0000000A         
    18 0000000A E8BD 4003 

@@ -12,7 +12,7 @@ checkButton 	PROC
 											
 POLL_AGAIN		LDR R0, =PF4_READ		;Put the address of the PB4
 				LDR R1,[R0]				;
-				CBNZ R1, return			;
+				CBZ R1, return			;
 				B	POLL_AGAIN			;
 				
 return			POP {R0,R1,LR}
