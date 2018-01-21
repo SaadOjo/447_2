@@ -87,13 +87,13 @@ read_ag	    LDR     R1, =I2C1_MCS
 			
 			;EOT? 
 			
-			;LDR     R1, =I2C1_MCS	
-			;MOV     R0, #0x00
-            ;STR     R0, [R1]
+			LDR     R1, =I2C1_MCS	
+			MOV     R0, #0x00
+            STR     R0, [R1]
 			
-			;LDR     R1, =I2C1_MCS	
-			;MOV     R0, #0x04
-            ;STR     R0, [R1]			
+			LDR     R1, =I2C1_MCS	
+			MOV     R0, #0x04
+            STR     R0, [R1]			
 		
 			POP 	{LR}
 			BX		LR	; Return
