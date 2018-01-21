@@ -1,0 +1,148 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000 400FE060 
+                       RCC     EQU              0x400FE060  ; Run mode clock co
+                                                            nfiguration registe
+                                                            r 
+    2 00000000 400FE050 
+                       RIS     EQU              0x400FE050  ; Run mode clock co
+                                                            nfiguration registe
+                                                            r  
+    3 00000000         
+    4 00000000         
+    5 00000000         
+    6 00000000         ;label   directive   value   comment
+    7 00000000                 AREA             clockChangeRoutine,CODE,READONL
+Y
+    8 00000000                 THUMB
+    9 00000000                 EXPORT           clockChange
+   10 00000000         
+   11 00000000         clockChange
+                               PROC
+   12 00000000         
+   13 00000000 B503            PUSH{LR,R1,R0}
+   14 00000002         
+   15 00000002 4912            LDR              R1, =RCC    ; 
+   16 00000004 6808            LDR              R0, [R1]
+   17 00000006 F440 6000       ORR              R0, R0, #0x0800 
+                                                            ; set bypass bit
+   18 0000000A F420 0080       BIC              R0, #0x400000 
+                                                            ; clear usesys bit
+   19 0000000E 6008            STR              R0, [R1]
+   20 00000010         
+   21 00000010 490E            LDR              R1, =RCC    ; 
+   22 00000012 6808            LDR              R0, [R1]
+   23 00000014 F420 60FE       BIC              R0, R0, #0x7F0 ; set bypass bit
+                                                            
+   24 00000018 F440 60C2       ORR              R0, #0x610  ; set xtal, set clo
+                                                            ck source 
+   25 0000001C F420 5000       BIC              R0, #0x2000 ; clear pwdwn
+   26 00000020 6008            STR              R0, [R1]
+   27 00000022         
+   28 00000022 490A            LDR              R1, =RCC    ; 
+   29 00000024 6808            LDR              R0, [R1]
+   30 00000026 F020 6078       BIC              R0, R0, #0xF800000 ; sys div = 
+                                                            0 (divratio = 1)
+   31 0000002A F440 0080       ORR              R0, #0x400000 ; set usesys bit 
+                                                            
+   32 0000002E 6008            STR              R0, [R1]
+   33 00000030         
+   34 00000030 4907            LDR              R1, =RIS    ;  ;POLL PLLRIS
+   35 00000032 6808    pollAgain
+                               LDR              R0, [R1]
+   36 00000034 F000 0040       AND              R0, R0, #0x40 ; isolate PLLLRIS
+                                                            
+   37 00000038 2800            CMP              R0,#0       ; check if PLL has 
+                                                            locked
+   38 0000003A D0FA            BEQ              pollAgain
+   39 0000003C         
+   40 0000003C 4903            LDR              R1, =RCC    ; clear bypass to e
+                                                            nable PLL
+   41 0000003E 6808            LDR              R0, [R1]
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   42 00000040 F420 6000       BIC              R0, R0, #0x0800 
+                                                            ; clear bypass bit
+   43 00000044 6008            STR              R0, [R1]
+   44 00000046         
+   45 00000046         
+   46 00000046 E8BD 4003       POP{LR,R1,R0}
+   47 0000004A 4770            BX               LR
+   48 0000004C                 ENDP
+   49 0000004C         
+   50 0000004C                 ALIGN
+   51 0000004C                 END
+              400FE060 
+              400FE050 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\clockchange.d -o.\objects\clockchange.o -I.\RTE\_Targ
+et_1 -ID:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -ID:\Keil
+_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSIO
+N SETA 524" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\clockchange.lst
+ clockChange.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+clockChange 00000000
+
+Symbol: clockChange
+   Definitions
+      At line 11 in file clockChange.s
+   Uses
+      At line 9 in file clockChange.s
+Comment: clockChange used once
+clockChangeRoutine 00000000
+
+Symbol: clockChangeRoutine
+   Definitions
+      At line 7 in file clockChange.s
+   Uses
+      None
+Comment: clockChangeRoutine unused
+pollAgain 00000032
+
+Symbol: pollAgain
+   Definitions
+      At line 35 in file clockChange.s
+   Uses
+      At line 38 in file clockChange.s
+Comment: pollAgain used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+RCC 400FE060
+
+Symbol: RCC
+   Definitions
+      At line 1 in file clockChange.s
+   Uses
+      At line 15 in file clockChange.s
+      At line 21 in file clockChange.s
+      At line 28 in file clockChange.s
+      At line 40 in file clockChange.s
+
+RIS 400FE050
+
+Symbol: RIS
+   Definitions
+      At line 2 in file clockChange.s
+   Uses
+      At line 34 in file clockChange.s
+Comment: RIS used once
+2 symbols
+341 symbols in table

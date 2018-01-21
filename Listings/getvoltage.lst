@@ -1,0 +1,147 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;label    directive   value   comment
+    2 00000000 40038028 
+                       ADC0_PSSI
+                               EQU              0x40038028
+    3 00000000 400380A8 
+                       ADC0_FIFO3
+                               EQU              0x400380A8
+    4 00000000 40038004 
+                       ADC0_RIS
+                               EQU              0x40038004
+    5 00000000 4003800C 
+                       ADC0_ISC
+                               EQU              0x4003800C
+    6 00000000         
+    7 00000000                 AREA             getVoltageSubroutine,CODE,READO
+NLY
+    8 00000000                 THUMB
+    9 00000000         
+   10 00000000                 EXPORT           getVoltage
+   11 00000000         
+   12 00000000         getVoltage
+                               PROC
+   13 00000000         
+   14 00000000 B501            PUSH             {R0,LR}
+   15 00000002         
+   16 00000002 4809            LDR              R0, =ADC0_PSSI ;  ; Trigger the
+                                                             ADC SS3
+   17 00000004 F04F 0108       MOV              R1, #0x8    ;
+   18 00000008 6001            STR              R1,[R0]     ;
+   19 0000000A         
+   20 0000000A 4808    POLL_AGAIN
+                               LDR              R0, =ADC0_RIS ;BUSY WAIT
+   21 0000000C 6801            LDR              R1, [R0]
+   22 0000000E F021 0107       BIC              R1, #0x7    ; Ignore everything
+                                                             but SS3
+   23 00000012 2900            CMP              R1,#0       ; Check for int
+   24 00000014 D0F9            BEQ              POLL_AGAIN  ; Read Again
+   25 00000016         
+   26 00000016 4806            LDR              R0, =ADC0_ISC ;  ; Clear the IN
+                                                            T flag
+   27 00000018 F04F 0108       MOV              R1, #0x8    ;
+   28 0000001C 6001            STR              R1,[R0]     ;
+   29 0000001E         
+   30 0000001E 4805            LDR              R0, =ADC0_FIFO3 
+                                                            ; ; Read the FIF0
+   31 00000020 6801            LDR              R1, [R0]    ;
+   32 00000022         
+   33 00000022 E8BD 4001       POP              {R0,LR}
+   34 00000026 4770            BX               LR
+   35 00000028         
+   36 00000028                 ENDP
+   37 00000028         
+   38 00000028                 ALIGN
+   39 00000028                 END
+              40038028 
+              40038004 
+              4003800C 
+              400380A8 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+erwork --depend=.\objects\getvoltage.d -o.\objects\getvoltage.o -I.\RTE\_Target
+_1 -ID:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -ID:\Keil_v
+5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION 
+SETA 524" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\getvoltage.lst co
+des\getVoltage.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+POLL_AGAIN 0000000A
+
+Symbol: POLL_AGAIN
+   Definitions
+      At line 20 in file codes\getVoltage.s
+   Uses
+      At line 24 in file codes\getVoltage.s
+Comment: POLL_AGAIN used once
+getVoltage 00000000
+
+Symbol: getVoltage
+   Definitions
+      At line 12 in file codes\getVoltage.s
+   Uses
+      At line 10 in file codes\getVoltage.s
+Comment: getVoltage used once
+getVoltageSubroutine 00000000
+
+Symbol: getVoltageSubroutine
+   Definitions
+      At line 7 in file codes\getVoltage.s
+   Uses
+      None
+Comment: getVoltageSubroutine unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+ADC0_FIFO3 400380A8
+
+Symbol: ADC0_FIFO3
+   Definitions
+      At line 3 in file codes\getVoltage.s
+   Uses
+      At line 30 in file codes\getVoltage.s
+Comment: ADC0_FIFO3 used once
+ADC0_ISC 4003800C
+
+Symbol: ADC0_ISC
+   Definitions
+      At line 5 in file codes\getVoltage.s
+   Uses
+      At line 26 in file codes\getVoltage.s
+Comment: ADC0_ISC used once
+ADC0_PSSI 40038028
+
+Symbol: ADC0_PSSI
+   Definitions
+      At line 2 in file codes\getVoltage.s
+   Uses
+      At line 16 in file codes\getVoltage.s
+Comment: ADC0_PSSI used once
+ADC0_RIS 40038004
+
+Symbol: ADC0_RIS
+   Definitions
+      At line 4 in file codes\getVoltage.s
+   Uses
+      At line 20 in file codes\getVoltage.s
+Comment: ADC0_RIS used once
+4 symbols
+343 symbols in table

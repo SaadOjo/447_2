@@ -1,0 +1,160 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000 20000400 
+                       STORE_ADDR
+                               EQU              0x20000400  ;
+    2 00000000 00000960 
+                       NO_SAMPLES
+                               EQU              2400        ;
+    3 00000000         
+    4 00000000         ;LABEL   DIRECTIVES  VALUE
+    5 00000000                 AREA             main,CODE,READONLY,ALIGN=2
+    6 00000000                 EXTERN           pwmInit
+    7 00000000                 EXTERN           initialize
+    8 00000000                 EXTERN           clockChange
+    9 00000000                 EXTERN           readAndStore
+   10 00000000                 EXPORT           __main
+   11 00000000                 ENTRY
+   12 00000000         __main
+   13 00000000 4C07            LDR              R4, =STORE_ADDR ;Initialise poi
+                                                            nter at starting ad
+                                                            dress
+   14 00000002 F44F 6516       MOV              R5, #NO_SAMPLES ;Initialize cou
+                                                            nters for the numbe
+                                                            r of samples
+   15 00000006         
+   16 00000006 F7FF FFFE       BL               clockChange ;Not sure if it wor
+                                                            ks as intended
+   17 0000000A F7FF FFFE       BL               pwmInit
+   18 0000000E F7FF FFFE       BL               initialize
+   19 00000012         
+   20 00000012 2D00    loop1   CMP              R5,#0       ;
+   21 00000014 D002            BEQ              playback    ;
+   22 00000016 F7FF FFFE       BL               readAndStore
+   23 0000001A E7FA            B                loop1
+   24 0000001C         
+   25 0000001C         playback
+   26 0000001C         
+   27 0000001C E7FE    DONE    B                DONE
+   28 0000001E 00 00           ALIGN
+   29 00000020                 END
+              20000400 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -ID:\Keil
+_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -ID:\Keil_v5\ARM\CMSIS\
+Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --
+predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DONE 0000001C
+
+Symbol: DONE
+   Definitions
+      At line 27 in file main.s
+   Uses
+      At line 27 in file main.s
+Comment: DONE used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 12 in file main.s
+   Uses
+      At line 10 in file main.s
+Comment: __main used once
+loop1 00000012
+
+Symbol: loop1
+   Definitions
+      At line 20 in file main.s
+   Uses
+      At line 23 in file main.s
+Comment: loop1 used once
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 5 in file main.s
+   Uses
+      None
+Comment: main unused
+playback 0000001C
+
+Symbol: playback
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 21 in file main.s
+Comment: playback used once
+5 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+NO_SAMPLES 00000960
+
+Symbol: NO_SAMPLES
+   Definitions
+      At line 2 in file main.s
+   Uses
+      At line 14 in file main.s
+Comment: NO_SAMPLES used once
+STORE_ADDR 20000400
+
+Symbol: STORE_ADDR
+   Definitions
+      At line 1 in file main.s
+   Uses
+      At line 13 in file main.s
+Comment: STORE_ADDR used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+clockChange 00000000
+
+Symbol: clockChange
+   Definitions
+      At line 8 in file main.s
+   Uses
+      At line 16 in file main.s
+Comment: clockChange used once
+initialize 00000000
+
+Symbol: initialize
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: initialize used once
+pwmInit 00000000
+
+Symbol: pwmInit
+   Definitions
+      At line 6 in file main.s
+   Uses
+      At line 17 in file main.s
+Comment: pwmInit used once
+readAndStore 00000000
+
+Symbol: readAndStore
+   Definitions
+      At line 9 in file main.s
+   Uses
+      At line 22 in file main.s
+Comment: readAndStore used once
+4 symbols
+347 symbols in table

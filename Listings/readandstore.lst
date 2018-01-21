@@ -1,0 +1,150 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;label    directive   value   comment
+    2 00000000 40038028 
+                       ADC0_PSSI
+                               EQU              0x40038028
+    3 00000000 400380A8 
+                       ADC0_FIFO3
+                               EQU              0x400380A8
+    4 00000000 40038004 
+                       ADC0_RIS
+                               EQU              0x40038004
+    5 00000000 4003800C 
+                       ADC0_ISC
+                               EQU              0x4003800C
+    6 00000000         
+    7 00000000                 AREA             readAndStoreSubroutine,CODE,REA
+DONLY
+    8 00000000                 THUMB
+    9 00000000         
+   10 00000000                 EXPORT           readAndStore
+   11 00000000         
+   12 00000000         readAndStore
+                               PROC
+   13 00000000         
+   14 00000000 B501            PUSH             {R0,LR}
+   15 00000002         
+   16 00000002         ;Activated by PWM instead
+   17 00000002         ;LDR R0, =ADC0_PSSI;  ; Trigger the ADC SS3 
+   18 00000002         ;MOV R1, #0x8   ;
+   19 00000002         ;STR R1,[R0]    ;
+   20 00000002         
+   21 00000002 4809    POLL_AGAIN
+                               LDR              R0, =ADC0_RIS ;BUSY WAIT
+   22 00000004 6801            LDR              R1, [R0]
+   23 00000006 F021 0107       BIC              R1, #0x7    ; Ignore everything
+                                                             but SS3
+   24 0000000A 2900            CMP              R1,#0       ; Check for int
+   25 0000000C D0F9            BEQ              POLL_AGAIN  ; Read Again
+   26 0000000E         
+   27 0000000E 4807            LDR              R0, =ADC0_ISC ;  ; Clear the IN
+                                                            T flag
+   28 00000010 F04F 0108       MOV              R1, #0x8    ;
+   29 00000014 6001            STR              R1,[R0]     ;
+   30 00000016         
+   31 00000016 4806            LDR              R0, =ADC0_FIFO3 
+                                                            ; ; Read the FIF0
+   32 00000018 6801            LDR              R1, [R0]    ;
+   33 0000001A         
+   34 0000001A F824 1B02       STRH             R1,[R4],#2  ;Store Halfword and
+                                                             Post increment
+   35 0000001E F1A5 0501       SUB              R5,#1       ;Decrement Counter
+   36 00000022         
+   37 00000022 E8BD 4001       POP              {R0,LR}
+   38 00000026 4770            BX               LR
+   39 00000028         
+   40 00000028                 ENDP
+   41 00000028         
+   42 00000028                 ALIGN
+   43 00000028                 END
+              40038004 
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+              4003800C 
+              400380A8 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\readandstore.d -o.\objects\readandstore.o -I.\RTE\_Ta
+rget_1 -ID:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -ID:\Ke
+il_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERS
+ION SETA 524" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\readandstore.
+lst codes\readAndStore.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+POLL_AGAIN 00000002
+
+Symbol: POLL_AGAIN
+   Definitions
+      At line 21 in file codes\readAndStore.s
+   Uses
+      At line 25 in file codes\readAndStore.s
+Comment: POLL_AGAIN used once
+readAndStore 00000000
+
+Symbol: readAndStore
+   Definitions
+      At line 12 in file codes\readAndStore.s
+   Uses
+      At line 10 in file codes\readAndStore.s
+Comment: readAndStore used once
+readAndStoreSubroutine 00000000
+
+Symbol: readAndStoreSubroutine
+   Definitions
+      At line 7 in file codes\readAndStore.s
+   Uses
+      None
+Comment: readAndStoreSubroutine unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+ADC0_FIFO3 400380A8
+
+Symbol: ADC0_FIFO3
+   Definitions
+      At line 3 in file codes\readAndStore.s
+   Uses
+      At line 31 in file codes\readAndStore.s
+Comment: ADC0_FIFO3 used once
+ADC0_ISC 4003800C
+
+Symbol: ADC0_ISC
+   Definitions
+      At line 5 in file codes\readAndStore.s
+   Uses
+      At line 27 in file codes\readAndStore.s
+Comment: ADC0_ISC used once
+ADC0_PSSI 40038028
+
+Symbol: ADC0_PSSI
+   Definitions
+      At line 2 in file codes\readAndStore.s
+   Uses
+      None
+Comment: ADC0_PSSI unused
+ADC0_RIS 40038004
+
+Symbol: ADC0_RIS
+   Definitions
+      At line 4 in file codes\readAndStore.s
+   Uses
+      At line 21 in file codes\readAndStore.s
+Comment: ADC0_RIS used once
+4 symbols
+343 symbols in table
