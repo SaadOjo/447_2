@@ -28,9 +28,10 @@ loop1			CMP	R5,#0;
 				B	loop1
 				
 playback		LDR R4,	=STORE_ADDR ;Reset the pointer address
-				LDR R5, #NO_SAMPLES ;Set the counter for writing the data
+				MOV R5, #NO_SAMPLES ;Set the counter for writing the data
 				
 				BL	init_i2c		;
+				
 				BL	writeToDac		;
 				
 DONE			B	DONE

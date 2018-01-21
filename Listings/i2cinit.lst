@@ -1,0 +1,224 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;Register           EQU     Address
+    2 00000000         ;----------------- -----   ------------
+    3 00000000 400FE608 
+                       RCGCGPIO
+                               EQU              0x400FE608
+    4 00000000 400FE620 
+                       RCGCI2C EQU              0x400FE620
+    5 00000000 40005420 
+                       GPIOAFSEL
+                               EQU              0x40005420
+    6 00000000 4000550C 
+                       GPIOODR EQU              0x4000550C
+    7 00000000 4000552C 
+                       GPIOPCTL
+                               EQU              0x4000552C
+    8 00000000 40020220 
+                       I2CMCR  EQU              0x40020220
+    9 00000000 4002000C 
+                       I2CMTPR EQU              0x4002000C
+   10 00000000 40020000 
+                       I2CMSA  EQU              0x40020000
+   11 00000000 40020008 
+                       I2CMDR  EQU              0x40020008
+   12 00000000 40020004 
+                       I2CMCS  EQU              0x40020004
+   13 00000000         
+   14 00000000                 AREA             |.text|, READONLY, CODE, ALIGN=
+2
+   15 00000000                 THUMB
+   16 00000000         
+   17 00000000                 EXPORT           init_i2c    ; Make available
+   18 00000000         
+   19 00000000         init_i2c
+   20 00000000         ;Enable and provide a clock to I2C module 0 in Run mode
+   21 00000000 4913            LDR              R1, =RCGCI2C
+   22 00000002 6808            LDR              R0, [R1]
+   23 00000004 F040 0001       ORR              R0, #1
+   24 00000008 6008            STR              R0, [R1]
+   25 0000000A BF00            NOP
+   26 0000000C BF00            NOP
+   27 0000000E BF00            NOP
+   28 00000010         
+   29 00000010         ; Initialize the clock for Port B.
+   30 00000010 4910            LDR              R1, =RCGCGPIO
+   31 00000012 6808            LDR              R0, [R1]
+   32 00000014 F040 0002       ORR              R0, #0x02
+   33 00000018 6008            STR              R0, [R1]
+   34 0000001A BF00            NOP
+   35 0000001C BF00            NOP
+   36 0000001E BF00            NOP
+   37 00000020         
+   38 00000020         ; Alternate function for PB2-PB3.
+   39 00000020 490D            LDR              R1, =GPIOAFSEL
+   40 00000022 6808            LDR              R0, [R1]
+   41 00000024 F040 000C       ORR              R0, #0x0C
+   42 00000028 6008            STR              R0, [R1]
+   43 0000002A         
+   44 0000002A         ; Enable the I2CSDA pin for open-drain operation
+   45 0000002A         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   46 0000002A 490C            LDR              R1, =GPIOODR
+   47 0000002C F04F 0008       MOV              R0, #0x08
+   48 00000030 6008            STR              R0, [R1]
+   49 00000032         
+   50 00000032         ; PB2-PB3=SCL-SDA
+   51 00000032 490B            LDR              R1, =GPIOPCTL
+   52 00000034 6808            LDR              R0, [R1]
+   53 00000036 F440 50D8       ORR              R0, #6912   ;ohhh???
+   54 0000003A 6008            STR              R0, [R1]
+   55 0000003C         
+   56 0000003C         ; Initialize the I2C Master
+   57 0000003C 4909            LDR              R1, =I2CMCR
+   58 0000003E F04F 0010       MOV              R0, #0x00000010
+   59 00000042 6008            STR              R0, [R1]
+   60 00000044         
+   61 00000044         ; Set the desired SCL clock speed of 100Kbps
+   62 00000044 4908            LDR              R1, =I2CMTPR
+   63 00000046 F04F 0009       MOV              R0, #0x00000009
+   64 0000004A 6008            STR              R0, [R1]
+   65 0000004C         
+   66 0000004C 4770            BX               LR
+   67 0000004E         
+   68 0000004E 00 00           ALIGN
+   69 00000050                 END
+              400FE620 
+              400FE608 
+              40005420 
+              4000550C 
+              4000552C 
+              40020220 
+              4002000C 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\i2cinit.d -o.\objects\i2cinit.o -I.\RTE\_Target_1 -IC
+:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Keil_v5\ARM\
+CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 5
+24" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\i2cinit.lst i2cInit.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 14 in file i2cInit.s
+   Uses
+      None
+Comment: .text unused
+init_i2c 00000000
+
+Symbol: init_i2c
+   Definitions
+      At line 19 in file i2cInit.s
+   Uses
+      At line 17 in file i2cInit.s
+Comment: init_i2c used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+GPIOAFSEL 40005420
+
+Symbol: GPIOAFSEL
+   Definitions
+      At line 5 in file i2cInit.s
+   Uses
+      At line 39 in file i2cInit.s
+Comment: GPIOAFSEL used once
+GPIOODR 4000550C
+
+Symbol: GPIOODR
+   Definitions
+      At line 6 in file i2cInit.s
+   Uses
+      At line 46 in file i2cInit.s
+Comment: GPIOODR used once
+GPIOPCTL 4000552C
+
+Symbol: GPIOPCTL
+   Definitions
+      At line 7 in file i2cInit.s
+   Uses
+      At line 51 in file i2cInit.s
+Comment: GPIOPCTL used once
+I2CMCR 40020220
+
+Symbol: I2CMCR
+   Definitions
+      At line 8 in file i2cInit.s
+   Uses
+      At line 57 in file i2cInit.s
+Comment: I2CMCR used once
+I2CMCS 40020004
+
+Symbol: I2CMCS
+   Definitions
+      At line 12 in file i2cInit.s
+   Uses
+      None
+Comment: I2CMCS unused
+I2CMDR 40020008
+
+Symbol: I2CMDR
+   Definitions
+      At line 11 in file i2cInit.s
+   Uses
+      None
+Comment: I2CMDR unused
+I2CMSA 40020000
+
+Symbol: I2CMSA
+   Definitions
+      At line 10 in file i2cInit.s
+   Uses
+      None
+Comment: I2CMSA unused
+I2CMTPR 4002000C
+
+Symbol: I2CMTPR
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Absolute symbols
+
+   Definitions
+      At line 9 in file i2cInit.s
+   Uses
+      At line 62 in file i2cInit.s
+Comment: I2CMTPR used once
+RCGCGPIO 400FE608
+
+Symbol: RCGCGPIO
+   Definitions
+      At line 3 in file i2cInit.s
+   Uses
+      At line 30 in file i2cInit.s
+Comment: RCGCGPIO used once
+RCGCI2C 400FE620
+
+Symbol: RCGCI2C
+   Definitions
+      At line 4 in file i2cInit.s
+   Uses
+      At line 21 in file i2cInit.s
+Comment: RCGCI2C used once
+10 symbols
+348 symbols in table

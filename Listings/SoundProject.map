@@ -16,6 +16,8 @@ Section Cross References
     main.o(main) refers to pwminit.o(pwmInitializeRoutine) for pwmInit
     main.o(main) refers to initialize.o(InitializeRoutine) for initialize
     main.o(main) refers to readandstore.o(readAndStoreSubroutine) for readAndStore
+    main.o(main) refers to i2cinit.o(.text) for init_i2c
+    main.o(main) refers to i2c.o(.text) for writeToDac
 
 
 ==============================================================================
@@ -40,24 +42,30 @@ Image Symbol Table
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
     checkButton.s                            0x00000000   Number         0  checkbutton.o ABSOLUTE
     clockChange.s                            0x00000000   Number         0  clockchange.o ABSOLUTE
+    codes\I2C.s                              0x00000000   Number         0  i2c.o ABSOLUTE
     codes\Startup.s                          0x00000000   Number         0  startup.o ABSOLUTE
     codes\initialize.s                       0x00000000   Number         0  initialize.o ABSOLUTE
     codes\pwmInit.s                          0x00000000   Number         0  pwminit.o ABSOLUTE
     codes\readAndStore.s                     0x00000000   Number         0  readandstore.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
+    i2cInit.s                                0x00000000   Number         0  i2cinit.o ABSOLUTE
     main.s                                   0x00000000   Number         0  main.o ABSOLUTE
     $v0                                      0x0000026c   Number         0  startup.o(RESET)
-    .text                                    0x00000284   Section        0  heapauxi.o(.text)
-    InitializeRoutine                        0x0000028c   Section      232  initialize.o(InitializeRoutine)
-    $v0                                      0x0000028c   Number         0  initialize.o(InitializeRoutine)
-    clockChangeRoutine                       0x00000374   Section       84  clockchange.o(clockChangeRoutine)
-    $v0                                      0x00000374   Number         0  clockchange.o(clockChangeRoutine)
-    main                                     0x000003c8   Section       36  main.o(main)
-    $v0                                      0x000003c8   Number         0  main.o(main)
-    pwmInitializeRoutine                     0x000003ec   Section      208  pwminit.o(pwmInitializeRoutine)
-    $v0                                      0x000003ec   Number         0  pwminit.o(pwmInitializeRoutine)
-    readAndStoreSubroutine                   0x000004bc   Section       56  readandstore.o(readAndStoreSubroutine)
-    $v0                                      0x000004bc   Number         0  readandstore.o(readAndStoreSubroutine)
+    .text                                    0x00000284   Section      156  i2c.o(.text)
+    $v0                                      0x00000284   Number         0  i2c.o(.text)
+    .text                                    0x00000320   Section      108  i2cinit.o(.text)
+    $v0                                      0x00000320   Number         0  i2cinit.o(.text)
+    .text                                    0x0000038c   Section        0  heapauxi.o(.text)
+    InitializeRoutine                        0x00000394   Section      232  initialize.o(InitializeRoutine)
+    $v0                                      0x00000394   Number         0  initialize.o(InitializeRoutine)
+    clockChangeRoutine                       0x0000047c   Section       84  clockchange.o(clockChangeRoutine)
+    $v0                                      0x0000047c   Number         0  clockchange.o(clockChangeRoutine)
+    main                                     0x000004d0   Section       48  main.o(main)
+    $v0                                      0x000004d0   Number         0  main.o(main)
+    pwmInitializeRoutine                     0x00000500   Section      208  pwminit.o(pwmInitializeRoutine)
+    $v0                                      0x00000500   Number         0  pwminit.o(pwmInitializeRoutine)
+    readAndStoreSubroutine                   0x000005d0   Section       56  readandstore.o(readAndStoreSubroutine)
+    $v0                                      0x000005d0   Number         0  readandstore.o(readAndStoreSubroutine)
     STACK                                    0x20000000   Section     1024  startup.o(STACK)
     StackMem                                 0x20000000   Data           0  startup.o(STACK)
 
@@ -191,14 +199,16 @@ Image Symbol Table
     WideTimer5B_Handler                      0x00000283   Thumb Code     0  startup.o(RESET)
     uDMA_Error                               0x00000283   Thumb Code     0  startup.o(RESET)
     uDMA_Handler                             0x00000283   Thumb Code     0  startup.o(RESET)
-    __use_two_region_memory                  0x00000285   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_escrow$2region                 0x00000287   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_expand$2region                 0x00000289   Thumb Code     2  heapauxi.o(.text)
-    initialize                               0x0000028d   Thumb Code   178  initialize.o(InitializeRoutine)
-    clockChange                              0x00000375   Thumb Code    76  clockchange.o(clockChangeRoutine)
-    __main                                   0x000003c9   Thumb Code     0  main.o(main)
-    pwmInit                                  0x000003ed   Thumb Code   156  pwminit.o(pwmInitializeRoutine)
-    readAndStore                             0x000004bd   Thumb Code    44  readandstore.o(readAndStoreSubroutine)
+    writeToDac                               0x00000285   Thumb Code   142  i2c.o(.text)
+    init_i2c                                 0x00000321   Thumb Code     0  i2cinit.o(.text)
+    __use_two_region_memory                  0x0000038d   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_escrow$2region                 0x0000038f   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_expand$2region                 0x00000391   Thumb Code     2  heapauxi.o(.text)
+    initialize                               0x00000395   Thumb Code   178  initialize.o(InitializeRoutine)
+    clockChange                              0x0000047d   Thumb Code    76  clockchange.o(clockChangeRoutine)
+    __main                                   0x000004d1   Thumb Code     0  main.o(main)
+    pwmInit                                  0x00000501   Thumb Code   156  pwminit.o(pwmInitializeRoutine)
+    readAndStore                             0x000005d1   Thumb Code    44  readandstore.o(readAndStoreSubroutine)
 
 
 
@@ -208,30 +218,32 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x000008f4, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00000a08, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000004f4, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000608, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000284   0x00000006   Code   RO           37    .text               c_w.l(heapauxi.o)
-    0x0000028a   0x0000028a   0x00000002   PAD
-    0x0000028c   0x0000028c   0x000000e8   Code   RO           23    InitializeRoutine   initialize.o
-    0x00000374   0x00000374   0x00000054   Code   RO           19    clockChangeRoutine  clockchange.o
-    0x000003c8   0x000003c8   0x00000024   Code   RO           16  * main                main.o
-    0x000003ec   0x000003ec   0x000000d0   Code   RO           12    pwmInitializeRoutine  pwminit.o
-    0x000004bc   0x000004bc   0x00000038   Code   RO           27    readAndStoreSubroutine  readandstore.o
+    0x00000284   0x00000284   0x0000009c   Code   RO           35    .text               i2c.o
+    0x00000320   0x00000320   0x0000006c   Code   RO           39    .text               i2cinit.o
+    0x0000038c   0x0000038c   0x00000006   Code   RO           44    .text               c_w.l(heapauxi.o)
+    0x00000392   0x00000392   0x00000002   PAD
+    0x00000394   0x00000394   0x000000e8   Code   RO           23    InitializeRoutine   initialize.o
+    0x0000047c   0x0000047c   0x00000054   Code   RO           19    clockChangeRoutine  clockchange.o
+    0x000004d0   0x000004d0   0x00000030   Code   RO           16  * main                main.o
+    0x00000500   0x00000500   0x000000d0   Code   RO           12    pwmInitializeRoutine  pwminit.o
+    0x000005d0   0x000005d0   0x00000038   Code   RO           27    readAndStoreSubroutine  readandstore.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x000004f4, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x00000608, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x000004f4   0x00000400   Data   RW            1    STACK               startup.o
+    0x20000000   0x00000608   0x00000400   Data   RW            1    STACK               startup.o
 
 
-    Execution Region ER_ZI (Exec base: 0x20000400, Load base: 0x000008f4, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x20000400, Load base: 0x00000a08, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
 
     **** No section assigned to this execution region ****
 
@@ -244,14 +256,16 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
         84          8          0          0          0        368   clockchange.o
+       156         14          0          0          0        396   i2c.o
+       108         30          0          0          0        228   i2cinit.o
        232         54          0          0          0        428   initialize.o
-        36          6          0          0          0        200   main.o
+        48          4          0          0          0        204   main.o
        208         52          0          0          0        400   pwminit.o
         56         12          0          0          0        376   readandstore.o
        644        620          0       1024          0        772   startup.o
 
     ----------------------------------------------------------------------
-      1260        752          0       1024          0       2544   Object Totals
+      1536        794          0       1024          0       3172   Object Totals
          0          0          0          0          0          0   (incl. Generated)
          0          0          0          0          0          0   (incl. Padding)
 
@@ -281,15 +295,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      1268        752          0       1024          0       2296   Grand Totals
-      1268        752          0       1024          0       2296   ELF Image Totals
-      1268        752          0       1024          0          0   ROM Totals
+      1544        794          0       1024          0       2824   Grand Totals
+      1544        794          0       1024          0       2824   ELF Image Totals
+      1544        794          0       1024          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 1268 (   1.24kB)
+    Total RO  Size (Code + RO Data)                 1544 (   1.51kB)
     Total RW  Size (RW Data + ZI Data)              1024 (   1.00kB)
-    Total ROM Size (Code + RO Data + RW Data)       2292 (   2.24kB)
+    Total ROM Size (Code + RO Data + RW Data)       2568 (   2.51kB)
 
 ==============================================================================
 

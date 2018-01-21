@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\SoundProject.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\SoundProject.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sun Jan 21 16:08:19 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sun Jan 21 17:30:18 2018
 <BR><P>
 <H3>Maximum Stack Usage =          0 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -13,13 +13,15 @@ Call chain for Maximum Stack Depth:</H3>
 Functions with no stack information
 </H3><UL>
  <LI><a href="#[7c]">Reset_Handler</a>
+ <LI><a href="#[83]">init_i2c</a>
  <LI><a href="#[7d]">__main</a>
 </UL>
 </UL>
 <P>
 <H3>
 Mutually Recursive functions
-</H3> <LI><a href="#[1]">NMI_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1]">NMI_Handler</a><BR>
+</H3> <LI><a href="#[7e]">writeToDac</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[7e]">writeToDac</a><BR>
+ <LI><a href="#[1]">NMI_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1]">NMI_Handler</a><BR>
  <LI><a href="#[2]">HardFault_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[2]">HardFault_Handler</a><BR>
  <LI><a href="#[3]">MemManage_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3]">MemManage_Handler</a><BR>
  <LI><a href="#[4]">BusFault_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[4]">BusFault_Handler</a><BR>
@@ -576,34 +578,47 @@ Global Symbols
 <P><STRONG><a name="[38]"></a>uDMA_Handler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup.o(RESET))
 <BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
 </UL>
-<P><STRONG><a name="[82]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[7e]"></a>writeToDac</STRONG> (Thumb, 142 bytes, Stack size 0 bytes, i2c.o(.text))
+<BR><BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writeToDac
+</UL>
+<BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writeToDac
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+</UL>
 
-<P><STRONG><a name="[83]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
-
-<P><STRONG><a name="[84]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
-
-<P><STRONG><a name="[80]"></a>initialize</STRONG> (Thumb, 178 bytes, Stack size 0 bytes, initialize.o(InitializeRoutine))
+<P><STRONG><a name="[83]"></a>init_i2c</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, i2cinit.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
-<P><STRONG><a name="[7e]"></a>clockChange</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, clockchange.o(clockChangeRoutine))
+<P><STRONG><a name="[84]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[85]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[86]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[81]"></a>initialize</STRONG> (Thumb, 178 bytes, Stack size 0 bytes, initialize.o(InitializeRoutine))
+<BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+</UL>
+
+<P><STRONG><a name="[7f]"></a>clockChange</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, clockchange.o(clockChangeRoutine))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
 <P><STRONG><a name="[7d]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, main.o(main))
-<BR><BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readAndStore
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initialize
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clockChange
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmInit
+<BR><BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writeToDac
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readAndStore
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initialize
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_i2c
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clockChange
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmInit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
 </UL>
 
-<P><STRONG><a name="[7f]"></a>pwmInit</STRONG> (Thumb, 156 bytes, Stack size 0 bytes, pwminit.o(pwmInitializeRoutine))
+<P><STRONG><a name="[80]"></a>pwmInit</STRONG> (Thumb, 156 bytes, Stack size 0 bytes, pwminit.o(pwmInitializeRoutine))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
-<P><STRONG><a name="[81]"></a>readAndStore</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, readandstore.o(readAndStoreSubroutine))
+<P><STRONG><a name="[82]"></a>readAndStore</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, readandstore.o(readAndStoreSubroutine))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 <P>

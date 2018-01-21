@@ -415,6 +415,16 @@
               <FileType>2</FileType>
               <FilePath>.\checkButton.s</FilePath>
             </File>
+            <File>
+              <FileName>I2C.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\codes\I2C.s</FilePath>
+            </File>
+            <File>
+              <FileName>i2cInit.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\i2cInit.s</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
