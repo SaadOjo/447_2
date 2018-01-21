@@ -10,6 +10,7 @@ NO_SAMPLES		EQU		24000;
 				EXTERN	checkButton	
 				EXTERN	init_i2c
 				EXTERN	writeToDac	
+				IMPORT  InitSysTick 	
 				EXPORT	__main
 				ENTRY				
 __main			
@@ -31,8 +32,10 @@ playback		LDR R4,	=STORE_ADDR ;Reset the pointer address
 				MOV R5, #NO_SAMPLES ;Set the counter for writing the data
 				
 				BL	init_i2c		;
+				BL	InitSysTick 	;
 				
-				BL	writeToDac		;
+				;Should go to subroutine
+
 				
 DONE			B	DONE
 				ALIGN

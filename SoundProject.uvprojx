@@ -425,6 +425,16 @@
               <FileType>2</FileType>
               <FilePath>.\i2cInit.s</FilePath>
             </File>
+            <File>
+              <FileName>SysTick_Init.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\codes\SysTick_Init.s</FilePath>
+            </File>
+            <File>
+              <FileName>mySystickHandler.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\mySystickHandler.s</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

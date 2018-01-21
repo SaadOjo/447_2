@@ -1,0 +1,172 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;*******************************************************
+                       ******** 
+    3 00000000         ; initialization and ISR
+    4 00000000         ;*******************************************************
+                       ********
+    5 00000000         ; Definition of the labes standing for
+    6 00000000         ; the address of the registers
+    7 00000000 E000E010 
+                       NVIC_ST_CTRL
+                               EQU              0xE000E010
+    8 00000000 E000E014 
+                       NVIC_ST_RELOAD
+                               EQU              0xE000E014
+    9 00000000 E000E018 
+                       NVIC_ST_CURRENT
+                               EQU              0xE000E018
+   10 00000000 E000ED20 
+                       SHP_SYSPRI3
+                               EQU              0xE000ED20
+   11 00000000         ; 0x7D0 = 2000 -> 2000*250 ns = 500mus
+   12 00000000 000007D0 
+                       RELOAD_VALUE
+                               EQU              0x000007D0
+   13 00000000         
+   14 00000000                 AREA             init_isr , READONLY, CODE, ALIG
+N=2
+   15 00000000                 THUMB
+   16 00000000         
+   17 00000000                 EXPORT           InitSysTick ; Make available
+   18 00000000         
+   19 00000000         InitSysTick
+                               PROC
+   20 00000000 B503            PUSH             {R0, R1, LR}
+   21 00000002         
+   22 00000002         ; first disable system timer and the related interrupt
+   23 00000002         ; then configure it to use isternal oscillator PIOSC/4
+   24 00000002 490C            LDR              R1 , =NVIC_ST_CTRL
+   25 00000004 F04F 0000       MOV              R0 , #0
+   26 00000008 6008            STR              R0 , [R1]
+   27 0000000A         
+   28 0000000A         ; now set the time out period
+   29 0000000A 490B            LDR              R1 , =NVIC_ST_RELOAD
+   30 0000000C F44F 60FA       LDR              R0 , =RELOAD_VALUE
+   31 00000010 6008            STR              R0 , [R1]
+   32 00000012         
+   33 00000012         ; now set the time out period
+   34 00000012 4909            LDR              R1 , =NVIC_ST_RELOAD
+   35 00000014 F44F 60FA       LDR              R0 , =RELOAD_VALUE
+   36 00000018 6008            STR              R0 , [R1]
+   37 0000001A         
+   38 0000001A         ; time out period is set
+   39 0000001A         ; now set the current timer value to the time out value
+   40 0000001A 4908            LDR              R1 , =NVIC_ST_CURRENT
+   41 0000001C 6008            STR              R0 , [R1]
+   42 0000001E         
+   43 0000001E         ; current timer = time out period
+   44 0000001E         ; now set the priority level
+   45 0000001E 4908            LDR              R1 , =SHP_SYSPRI3
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   46 00000020 F04F 4080       MOV              R0 , #0x40000000
+   47 00000024 6008            STR              R0 , [R1]
+   48 00000026         
+   49 00000026         ; priority is set to 2
+   50 00000026         ; now enable system timer and the related interrupt
+   51 00000026 4903            LDR              R1 , =NVIC_ST_CTRL
+   52 00000028 F04F 0003       MOV              R0 , #0x03
+   53 0000002C 6008            STR              R0 , [ R1 ]
+   54 0000002E         ; set up for system time is now complete
+   55 0000002E         
+   56 0000002E E8BD 4003       POP              {R0, R1, LR}
+   57 00000032 4770            BX               LR
+   58 00000034                 ENDP
+   59 00000034         
+   60 00000034                 ALIGN                        ; Aligning the outp
+                                                            ut binary
+   61 00000034                 END                          ; End of file
+              E000E010 
+              E000E014 
+              E000E018 
+              E000ED20 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\systick_init.d -o.\objects\systick_init.o -I.\RTE\_Ta
+rget_1 -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Ke
+il_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERS
+ION SETA 524" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\systick_init.
+lst codes\SysTick_Init.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+InitSysTick 00000000
+
+Symbol: InitSysTick
+   Definitions
+      At line 19 in file codes\SysTick_Init.s
+   Uses
+      At line 17 in file codes\SysTick_Init.s
+Comment: InitSysTick used once
+init_isr 00000000
+
+Symbol: init_isr
+   Definitions
+      At line 14 in file codes\SysTick_Init.s
+   Uses
+      None
+Comment: init_isr unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+NVIC_ST_CTRL E000E010
+
+Symbol: NVIC_ST_CTRL
+   Definitions
+      At line 7 in file codes\SysTick_Init.s
+   Uses
+      At line 24 in file codes\SysTick_Init.s
+      At line 51 in file codes\SysTick_Init.s
+
+NVIC_ST_CURRENT E000E018
+
+Symbol: NVIC_ST_CURRENT
+   Definitions
+      At line 9 in file codes\SysTick_Init.s
+   Uses
+      At line 40 in file codes\SysTick_Init.s
+Comment: NVIC_ST_CURRENT used once
+NVIC_ST_RELOAD E000E014
+
+Symbol: NVIC_ST_RELOAD
+   Definitions
+      At line 8 in file codes\SysTick_Init.s
+   Uses
+      At line 29 in file codes\SysTick_Init.s
+      At line 34 in file codes\SysTick_Init.s
+
+RELOAD_VALUE 000007D0
+
+Symbol: RELOAD_VALUE
+   Definitions
+      At line 12 in file codes\SysTick_Init.s
+   Uses
+      At line 30 in file codes\SysTick_Init.s
+      At line 35 in file codes\SysTick_Init.s
+
+SHP_SYSPRI3 E000ED20
+
+Symbol: SHP_SYSPRI3
+   Definitions
+      At line 10 in file codes\SysTick_Init.s
+   Uses
+      At line 45 in file codes\SysTick_Init.s
+Comment: SHP_SYSPRI3 used once
+5 symbols
+343 symbols in table

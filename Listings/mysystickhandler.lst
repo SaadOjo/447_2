@@ -1,0 +1,127 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000 20000400 
+                       STORE_ADDR
+                               EQU              0x20000400  ;
+    2 00000000 00005DC0 
+                       NO_SAMPLES
+                               EQU              24000       ;
+    3 00000000         
+    4 00000000                 AREA             |.text|, READONLY, CODE, ALIGN=
+2
+    5 00000000                 THUMB
+    6 00000000         
+    7 00000000                 EXTERN           writeToDac
+    8 00000000                 EXPORT           mySystickHandler 
+                                                            ; Make available
+    9 00000000         
+   10 00000000         mySystickHandler
+   11 00000000 2D00            CMP              R5,#0       ;
+   12 00000002 D003            BEQ              reset       ;
+   13 00000004 F7FF FFFE       BL               writeToDac  ;
+   14 00000008 3D01            SUBS             R5,#1       ;
+   15 0000000A         
+   16 0000000A 4770    return  BX               LR          ; Return
+   17 0000000C         
+   18 0000000C         reset
+   19 0000000C 4C01            LDR              R4, =STORE_ADDR ;Initialise poi
+                                                            nter at starting ad
+                                                            dress
+   20 0000000E F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
+                                                            nters for the numbe
+                                                            r of samples
+   21 00000012         ;Read new playback Rate  
+   22 00000012 E7FA            B                return
+   23 00000014         
+   24 00000014                 ALIGN                        ; Aligning the outp
+                                                            ut binary
+   25 00000014                 END                          ; End of file
+              20000400 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\mysystickhandler.d -o.\objects\mysystickhandler.o -I.
+\RTE\_Target_1 -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123
+ -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVIS
+ION_VERSION SETA 524" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\mysys
+tickhandler.lst mySystickHandler.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 4 in file mySystickHandler.s
+   Uses
+      None
+Comment: .text unused
+mySystickHandler 00000000
+
+Symbol: mySystickHandler
+   Definitions
+      At line 10 in file mySystickHandler.s
+   Uses
+      At line 8 in file mySystickHandler.s
+Comment: mySystickHandler used once
+reset 0000000C
+
+Symbol: reset
+   Definitions
+      At line 18 in file mySystickHandler.s
+   Uses
+      At line 12 in file mySystickHandler.s
+Comment: reset used once
+return 0000000A
+
+Symbol: return
+   Definitions
+      At line 16 in file mySystickHandler.s
+   Uses
+      At line 22 in file mySystickHandler.s
+Comment: return used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+NO_SAMPLES 00005DC0
+
+Symbol: NO_SAMPLES
+   Definitions
+      At line 2 in file mySystickHandler.s
+   Uses
+      At line 20 in file mySystickHandler.s
+Comment: NO_SAMPLES used once
+STORE_ADDR 20000400
+
+Symbol: STORE_ADDR
+   Definitions
+      At line 1 in file mySystickHandler.s
+   Uses
+      At line 19 in file mySystickHandler.s
+Comment: STORE_ADDR used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+writeToDac 00000000
+
+Symbol: writeToDac
+   Definitions
+      At line 7 in file mySystickHandler.s
+   Uses
+      At line 13 in file mySystickHandler.s
+Comment: writeToDac used once
+1 symbol
+343 symbols in table

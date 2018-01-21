@@ -42,14 +42,14 @@ ARM Macro Assembler    Page 1
    21 00000000         
    22 00000000         ; Set the slave address to 0x60
    23 00000000 4923    idle    LDR              R1, =I2CMSA
-   24 00000002 F04F 0060       MOV              R0, #0x60
+   24 00000002 F04F 00C0       MOV              R0, #0xC0   ; 
    25 00000006 6008            STR              R0, [R1]
    26 00000008         
    27 00000008         ;Place data (byte) to be transmitted in the data registe
                        r 
    28 00000008         ;by writing the I2CMDR register with the desired data
    29 00000008         
-   30 00000008 F854 3B01       LDR              R3,[R4],#1  ; Post Increment
+   30 00000008 F814 3B01       LDRB             R3,[R4],#1  ; Post Increment
    31 0000000C EA4F 1313       LSR              R3, #4      ;Shift since we are
                                                              only using 4 bits
    32 00000010 4920            LDR              R1, =I2CMDR
@@ -107,8 +107,8 @@ ARM Macro Assembler    Page 2
    72 00000050 D1F6            BNE              write_mcs
    73 00000052         ;if error bit is zero
    74 00000052         
-   75 00000052 6823    continue
-                               LDR              R3,[R4]     ; Don't need to Pos
+   75 00000052 7823    continue
+                               LDRB             R3,[R4]     ; Don't need to Pos
                                                             t Increment (Alread
                                                             y Done Above)
    76 00000054 EA4F 1303       LSL              R3,#4       ;Shift since we are

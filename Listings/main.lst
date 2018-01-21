@@ -20,47 +20,55 @@ ARM Macro Assembler    Page 1
    10 00000000                 EXTERN           checkButton
    11 00000000                 EXTERN           init_i2c
    12 00000000                 EXTERN           writeToDac
-   13 00000000                 EXPORT           __main
-   14 00000000                 ENTRY
-   15 00000000         __main
-   16 00000000 4C0A            LDR              R4, =STORE_ADDR ;Initialise poi
+   13 00000000                 IMPORT           InitSysTick
+   14 00000000                 EXPORT           __main
+   15 00000000                 ENTRY
+   16 00000000         __main
+   17 00000000 4C09            LDR              R4, =STORE_ADDR ;Initialise poi
                                                             nter at starting ad
                                                             dress
-   17 00000002 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
+   18 00000002 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
                                                             nters for the numbe
                                                             r of samples
-   18 00000006         
-   19 00000006 F7FF FFFE       BL               clockChange ;Not sure if it wor
+   19 00000006         
+   20 00000006 F7FF FFFE       BL               clockChange ;Not sure if it wor
                                                             ks as intended
-   20 0000000A F7FF FFFE       BL               pwmInit
-   21 0000000E F7FF FFFE       BL               initialize
-   22 00000012         
-   23 00000012         ;BL checkButton  ;BUSY WAIT
-   24 00000012         
-   25 00000012 2D00    loop1   CMP              R5,#0       ;
-   26 00000014 D002            BEQ              playback    ;
-   27 00000016 F7FF FFFE       BL               readAndStore
-   28 0000001A E7FA            B                loop1
-   29 0000001C         
-   30 0000001C 4C03    playback
+   21 0000000A F7FF FFFE       BL               pwmInit
+   22 0000000E F7FF FFFE       BL               initialize
+   23 00000012         
+   24 00000012         ;BL checkButton  ;BUSY WAIT
+   25 00000012         
+   26 00000012 2D00    loop1   CMP              R5,#0       ;
+   27 00000014 D002            BEQ              playback    ;
+   28 00000016 F7FF FFFE       BL               readAndStore
+   29 0000001A E7FA            B                loop1
+   30 0000001C         
+   31 0000001C 4C02    playback
                                LDR              R4, =STORE_ADDR ;Reset the poin
                                                             ter address
-   31 0000001E F645 55C0       MOV              R5, #NO_SAMPLES ;Set the counte
+   32 0000001E F645 55C0       MOV              R5, #NO_SAMPLES ;Set the counte
                                                             r for writing the d
                                                             ata
-   32 00000022         
-   33 00000022 F7FF FFFE       BL               init_i2c    ;
-   34 00000026         
-   35 00000026 F7FF FFFE       BL               writeToDac  ;
-   36 0000002A         
-   37 0000002A E7FE    DONE    B                DONE
-   38 0000002C                 ALIGN
-   39 0000002C                 END
+   33 00000022         
+   34 00000022 F7FF FFFE       BL               init_i2c    ;
+   35 00000026         
+   36 00000026         ;Should go to subroutine
+   37 00000026         
+   38 00000026         
+   39 00000026 E7FE    DONE    B                DONE
+   40 00000028                 ALIGN
+   41 00000028                 END
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\Keil
 _v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Keil_v5\ARM\CMSIS\
 Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --
+
+
+
+ARM Macro Assembler    Page 2 
+
+
 predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
 
 
@@ -68,29 +76,29 @@ predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-DONE 0000002A
+DONE 00000026
 
 Symbol: DONE
    Definitions
-      At line 37 in file main.s
+      At line 39 in file main.s
    Uses
-      At line 37 in file main.s
+      At line 39 in file main.s
 Comment: DONE used once
 __main 00000000
 
 Symbol: __main
    Definitions
-      At line 15 in file main.s
+      At line 16 in file main.s
    Uses
-      At line 13 in file main.s
+      At line 14 in file main.s
 Comment: __main used once
 loop1 00000012
 
 Symbol: loop1
    Definitions
-      At line 25 in file main.s
+      At line 26 in file main.s
    Uses
-      At line 28 in file main.s
+      At line 29 in file main.s
 Comment: loop1 used once
 main 00000000
 
@@ -104,9 +112,9 @@ playback 0000001C
 
 Symbol: playback
    Definitions
-      At line 30 in file main.s
+      At line 31 in file main.s
    Uses
-      At line 26 in file main.s
+      At line 27 in file main.s
 Comment: playback used once
 5 symbols
 
@@ -121,8 +129,8 @@ Symbol: NO_SAMPLES
    Definitions
       At line 2 in file main.s
    Uses
-      At line 17 in file main.s
-      At line 31 in file main.s
+      At line 18 in file main.s
+      At line 32 in file main.s
 
 STORE_ADDR 20000400
 
@@ -130,8 +138,8 @@ Symbol: STORE_ADDR
    Definitions
       At line 1 in file main.s
    Uses
-      At line 16 in file main.s
-      At line 30 in file main.s
+      At line 17 in file main.s
+      At line 31 in file main.s
 
 2 symbols
 
@@ -140,6 +148,14 @@ Symbol: STORE_ADDR
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 External symbols
 
+InitSysTick 00000000
+
+Symbol: InitSysTick
+   Definitions
+      At line 13 in file main.s
+   Uses
+      None
+Comment: InitSysTick unused
 checkButton 00000000
 
 Symbol: checkButton
@@ -154,7 +170,7 @@ Symbol: clockChange
    Definitions
       At line 8 in file main.s
    Uses
-      At line 19 in file main.s
+      At line 20 in file main.s
 Comment: clockChange used once
 init_i2c 00000000
 
@@ -162,7 +178,7 @@ Symbol: init_i2c
    Definitions
       At line 11 in file main.s
    Uses
-      At line 33 in file main.s
+      At line 34 in file main.s
 Comment: init_i2c used once
 initialize 00000000
 
@@ -170,7 +186,7 @@ Symbol: initialize
    Definitions
       At line 7 in file main.s
    Uses
-      At line 21 in file main.s
+      At line 22 in file main.s
 Comment: initialize used once
 pwmInit 00000000
 
@@ -178,7 +194,7 @@ Symbol: pwmInit
    Definitions
       At line 6 in file main.s
    Uses
-      At line 20 in file main.s
+      At line 21 in file main.s
 Comment: pwmInit used once
 readAndStore 00000000
 
@@ -186,15 +202,21 @@ Symbol: readAndStore
    Definitions
       At line 9 in file main.s
    Uses
-      At line 27 in file main.s
+      At line 28 in file main.s
 Comment: readAndStore used once
 writeToDac 00000000
 
 Symbol: writeToDac
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+External symbols
+
    Definitions
       At line 12 in file main.s
    Uses
-      At line 35 in file main.s
-Comment: writeToDac used once
-7 symbols
-350 symbols in table
+      None
+Comment: writeToDac unused
+8 symbols
+351 symbols in table

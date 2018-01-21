@@ -331,8 +331,12 @@ PendSV_Handler  PROC
                 B       .
                 ENDP
 SysTick_Handler PROC
+	
+				IMPORT mySystickHandler
                 EXPORT  SysTick_Handler           [WEAK]
-                B       .
+					
+                B       mySystickHandler			;Edited here
+				
                 ENDP
 IntDefaultHandler\
                 PROC

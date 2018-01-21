@@ -21,13 +21,13 @@ writeToDac	PROC
 
 			; Set the slave address to 0x60
 idle        LDR     R1, =I2CMSA 	
-            MOV     R0, #0x60
+            MOV     R0, #0xC0; 
             STR     R0, [R1]
 			
 			;Place data (byte) to be transmitted in the data register 
 			;by writing the I2CMDR register with the desired data
 			
-			LDR 	R3,[R4],#1			; Post Increment
+			LDRB 	R3,[R4],#1			; Post Increment
 			LSR 	R3, #4				;Shift since we are only using 4 bits
 			LDR     R1, =I2CMDR	
             STR     R3, [R1]
@@ -72,7 +72,7 @@ error		LDR     R2, [R1]
 			BNE     write_mcs
 			;if error bit is zero
 			
-continue    LDR 	R3,[R4] 			; Don't need to Post Increment (Already Done Above)
+continue    LDRB 	R3,[R4] 			; Don't need to Post Increment (Already Done Above)
 			LSL 	R3,#4				;Shift since we are only using 4 bits
 			LDR     R1, =I2CMDR	
             STR     R3, [R1]
