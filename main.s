@@ -6,7 +6,10 @@ NO_SAMPLES		EQU		24000;
 				EXTERN	pwmInit
 				EXTERN	initialize
 				EXTERN	clockChange	
-				EXTERN	readAndStore					
+				EXTERN	readAndStore
+				EXTERN	checkButton	
+				EXTERN	init_i2c
+				EXTERN	writeToDac	
 				EXPORT	__main
 				ENTRY				
 __main			
@@ -17,12 +20,18 @@ __main
 				BL	pwmInit
 				BL	initialize
 				
+				;BL checkButton		;BUSY WAIT
+				
 loop1			CMP	R5,#0;
 				BEQ playback;
 				BL  readAndStore
 				B	loop1
 				
-playback				
+playback		LDR R4,	=STORE_ADDR ;Reset the pointer address
+				LDR R5, #NO_SAMPLES ;Set the counter for writing the data
+				
+				BL	init_i2c		;
+				BL	writeToDac		;
 				
 DONE			B	DONE
 				ALIGN

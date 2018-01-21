@@ -149,9 +149,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>27</LineNumber>
+          <LineNumber>30</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>952</Address>
+          <Address>996</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -160,7 +160,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\main.s</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\SoundProject\main.s\27</Expression>
+          <Expression>\\SoundProject\main.s\30</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
@@ -291,6 +291,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\codes\readAndStore.s</PathWithFileName>
       <FilenameWithoutPath>readAndStore.s</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>7</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\checkButton.s</PathWithFileName>
+      <FilenameWithoutPath>checkButton.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

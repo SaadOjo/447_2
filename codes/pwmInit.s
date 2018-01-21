@@ -83,7 +83,8 @@ pwmInit      	PROC
 				STR R1, [R0]
 				
 				LDR R0, =PWM0_0LOAD	;
-				MOV R1,  #1250; 
+				;MOV R1,  #1250; 
+				MOV R1,  #2500; 
 				STR R1, [R0]
 				
 				LDR R0, =PWM0_0CMPA	;

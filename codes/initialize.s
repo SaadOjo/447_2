@@ -22,7 +22,14 @@ PORTE_PCTL 		EQU 0x4002452C ; Alternative function configuration
 PORTE_AFSEL 	EQU 0x40024420 ; Alternate function select
 PORTE_AMSEL 	EQU 0x40024528 ; Enable analog	
 
-
+; PORT F base address EQU 0x40025000
+PORTF_DEN 		EQU 0x4002551C ; Digital Enable
+PORTF_AMSEL 	EQU 0x40025528 ; Enable analog
+PORTF_GPIODIR 	EQU 0x40025400 ; Direction
+	
+	
+	
+	
 ;label			directive			value			comment
 				AREA  InitializeRoutine,CODE,READONLY
 				THUMB	
@@ -42,7 +49,7 @@ initialize	PROC
 				NOP ; Let clock stabilize
 				LDR R1, =RCGCGPIO ; Turn on GPIO clock
 				LDR R0, [R1]
-				ORR R0, R0, #0x10 ; set bit 4 to enable port E clock
+				ORR R0, R0, #0x30 ; set bit 4 and 5 to enable port E and port F clock
 				STR R0, [R1]
 				NOP
 				NOP
@@ -68,6 +75,27 @@ initialize	PROC
 				LDR R0, [R1]
 				ORR R0, R0, #0x08 ; set bit 3 to enable analog on PE3
 				STR R0, [R1]
+				
+				;Configure Port PB4 for switch input
+				
+				LDR R1, =PORTF_DEN
+				LDR R0, [R1]
+				ORR R0, R0, #0x10 ; set bit 4 to enable analog on PF4
+				STR R0, [R1]
+				; Enable analog on PE3
+				LDR R1, =PORTF_AMSEL
+				LDR R0, [R1]
+				BIC R0, R0, #0x10 ; clear bit 4 to disable analog on PF4
+				STR R0, [R1]
+				
+				LDR R1, =PORTF_GPIODIR
+				LDR R0, [R1]
+				BIC R0, R0, #0x10 ; clear bit 4 make input
+				STR R0, [R1]
+				
+				
+				
+				
 				; Disable sequencer while ADC setup
 				LDR R1, =ADC0_ACTSS
 				LDR R0, [R1]

@@ -1,0 +1,99 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;label    directive   value   comment
+    2 00000000 40025040 
+                       PF4_READ
+                               EQU              0x40025040  ; 
+    3 00000000         
+    4 00000000                 AREA             checkButtonSubroutine,CODE,READ
+ONLY
+    5 00000000                 THUMB
+    6 00000000         
+    7 00000000                 EXPORT           checkButton
+    8 00000000         
+    9 00000000         checkButton
+                               PROC
+   10 00000000         
+   11 00000000 B503            PUSH             {R0,R1,LR}
+   12 00000002         
+   13 00000002 4803    POLL_AGAIN
+                               LDR              R0, =PF4_READ ;Put the address 
+                                                            of the PB4
+   14 00000004 6801            LDR              R1,[R0]     ;
+   15 00000006 B901            CBNZ             R1, return  ;
+   16 00000008 E7FB            B                POLL_AGAIN  ;
+   17 0000000A         
+   18 0000000A E8BD 4003 
+                       return  POP              {R0,R1,LR}
+   19 0000000E 4770            BX               LR
+   20 00000010         
+   21 00000010                 ENDP
+   22 00000010         
+   23 00000010                 ALIGN
+   24 00000010                 END
+              40025040 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\checkbutton.d -o.\objects\checkbutton.o -I.\RTE\_Targ
+et_1 -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Keil
+_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSIO
+N SETA 524" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\checkbutton.lst
+ checkButton.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+POLL_AGAIN 00000002
+
+Symbol: POLL_AGAIN
+   Definitions
+      At line 13 in file checkButton.s
+   Uses
+      At line 16 in file checkButton.s
+Comment: POLL_AGAIN used once
+checkButton 00000000
+
+Symbol: checkButton
+   Definitions
+      At line 9 in file checkButton.s
+   Uses
+      At line 7 in file checkButton.s
+Comment: checkButton used once
+checkButtonSubroutine 00000000
+
+Symbol: checkButtonSubroutine
+   Definitions
+      At line 4 in file checkButton.s
+   Uses
+      None
+Comment: checkButtonSubroutine unused
+return 0000000A
+
+Symbol: return
+   Definitions
+      At line 18 in file checkButton.s
+   Uses
+      At line 15 in file checkButton.s
+Comment: return used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+PF4_READ 40025040
+
+Symbol: PF4_READ
+   Definitions
+      At line 2 in file checkButton.s
+   Uses
+      At line 13 in file checkButton.s
+Comment: PF4_READ used once
+1 symbol
+341 symbols in table
