@@ -24,7 +24,7 @@ ARM Macro Assembler    Page 1
    14 00000000                 EXPORT           __main
    15 00000000                 ENTRY
    16 00000000         __main
-   17 00000000 4C09            LDR              R4, =STORE_ADDR ;Initialise poi
+   17 00000000 4C0A            LDR              R4, =STORE_ADDR ;Initialise poi
                                                             nter at starting ad
                                                             dress
    18 00000002 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
@@ -43,7 +43,7 @@ ARM Macro Assembler    Page 1
    28 00000016 F7FF FFFE       BL               readAndStore
    29 0000001A E7FA            B                loop1
    30 0000001C         
-   31 0000001C 4C02    playback
+   31 0000001C 4C03    playback
                                LDR              R4, =STORE_ADDR ;Reset the poin
                                                             ter address
    32 0000001E F645 55C0       MOV              R5, #NO_SAMPLES ;Set the counte
@@ -51,24 +51,25 @@ ARM Macro Assembler    Page 1
                                                             ata
    33 00000022         
    34 00000022 F7FF FFFE       BL               init_i2c    ;
-   35 00000026         
-   36 00000026         ;Should go to subroutine
-   37 00000026         
-   38 00000026         
-   39 00000026 E7FE    DONE    B                DONE
-   40 00000028                 ALIGN
-   41 00000028                 END
+   35 00000026 F7FF FFFE       BL               InitSysTick ;
+   36 0000002A         
+   37 0000002A         ;Should go to subroutine
+   38 0000002A         
+   39 0000002A         
+   40 0000002A E7FE    DONE    B                DONE
+   41 0000002C                 ALIGN
+   42 0000002C                 END
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\Keil
 _v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Keil_v5\ARM\CMSIS\
-Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --
 
 
 
 ARM Macro Assembler    Page 2 
 
 
+Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --
 predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
 
 
@@ -76,13 +77,13 @@ predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-DONE 00000026
+DONE 0000002A
 
 Symbol: DONE
    Definitions
-      At line 39 in file main.s
+      At line 40 in file main.s
    Uses
-      At line 39 in file main.s
+      At line 40 in file main.s
 Comment: DONE used once
 __main 00000000
 
@@ -154,8 +155,8 @@ Symbol: InitSysTick
    Definitions
       At line 13 in file main.s
    Uses
-      None
-Comment: InitSysTick unused
+      At line 35 in file main.s
+Comment: InitSysTick used once
 checkButton 00000000
 
 Symbol: checkButton

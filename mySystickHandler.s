@@ -7,12 +7,14 @@ NO_SAMPLES			EQU		24000;
 					EXTERN	writeToDac
 					EXPORT  mySystickHandler        ; Make available
 
-mySystickHandler	
+mySystickHandler	PUSH {LR}
+				
 					CMP R5,#0			;
 					BEQ	reset			;
 					BL	writeToDac		;
 					SUBS R5,#1			;
-            
+					
+					POP {LR}
 return         		BX		LR					    ; Return
 
 reset 				

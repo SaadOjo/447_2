@@ -19,27 +19,30 @@ ARM Macro Assembler    Page 1
     8 00000000                 EXPORT           mySystickHandler 
                                                             ; Make available
     9 00000000         
-   10 00000000         mySystickHandler
-   11 00000000 2D00            CMP              R5,#0       ;
-   12 00000002 D003            BEQ              reset       ;
-   13 00000004 F7FF FFFE       BL               writeToDac  ;
-   14 00000008 3D01            SUBS             R5,#1       ;
-   15 0000000A         
-   16 0000000A 4770    return  BX               LR          ; Return
-   17 0000000C         
-   18 0000000C         reset
-   19 0000000C 4C01            LDR              R4, =STORE_ADDR ;Initialise poi
+   10 00000000 B500    mySystickHandler
+                               PUSH             {LR}
+   11 00000002         
+   12 00000002 2D00            CMP              R5,#0       ;
+   13 00000004 D005            BEQ              reset       ;
+   14 00000006 F7FF FFFE       BL               writeToDac  ;
+   15 0000000A 3D01            SUBS             R5,#1       ;
+   16 0000000C         
+   17 0000000C F85D EB04       POP              {LR}
+   18 00000010 4770    return  BX               LR          ; Return
+   19 00000012         
+   20 00000012         reset
+   21 00000012 4C02            LDR              R4, =STORE_ADDR ;Initialise poi
                                                             nter at starting ad
                                                             dress
-   20 0000000E F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
+   22 00000014 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
                                                             nters for the numbe
                                                             r of samples
-   21 00000012         ;Read new playback Rate  
-   22 00000012 E7FA            B                return
-   23 00000014         
-   24 00000014                 ALIGN                        ; Aligning the outp
+   23 00000018         ;Read new playback Rate  
+   24 00000018 E7FA            B                return
+   25 0000001A         
+   26 0000001A 00 00           ALIGN                        ; Aligning the outp
                                                             ut binary
-   25 00000014                 END                          ; End of file
+   27 0000001C                 END                          ; End of file
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\mysystickhandler.d -o.\objects\mysystickhandler.o -I.
@@ -69,21 +72,21 @@ Symbol: mySystickHandler
    Uses
       At line 8 in file mySystickHandler.s
 Comment: mySystickHandler used once
-reset 0000000C
+reset 00000012
 
 Symbol: reset
    Definitions
-      At line 18 in file mySystickHandler.s
+      At line 20 in file mySystickHandler.s
    Uses
-      At line 12 in file mySystickHandler.s
+      At line 13 in file mySystickHandler.s
 Comment: reset used once
-return 0000000A
+return 00000010
 
 Symbol: return
    Definitions
-      At line 16 in file mySystickHandler.s
+      At line 18 in file mySystickHandler.s
    Uses
-      At line 22 in file mySystickHandler.s
+      At line 24 in file mySystickHandler.s
 Comment: return used once
 4 symbols
 
@@ -98,7 +101,7 @@ Symbol: NO_SAMPLES
    Definitions
       At line 2 in file mySystickHandler.s
    Uses
-      At line 20 in file mySystickHandler.s
+      At line 22 in file mySystickHandler.s
 Comment: NO_SAMPLES used once
 STORE_ADDR 20000400
 
@@ -106,7 +109,7 @@ Symbol: STORE_ADDR
    Definitions
       At line 1 in file mySystickHandler.s
    Uses
-      At line 19 in file mySystickHandler.s
+      At line 21 in file mySystickHandler.s
 Comment: STORE_ADDR used once
 2 symbols
 
@@ -121,7 +124,7 @@ Symbol: writeToDac
    Definitions
       At line 7 in file mySystickHandler.s
    Uses
-      At line 13 in file mySystickHandler.s
+      At line 14 in file mySystickHandler.s
 Comment: writeToDac used once
 1 symbol
 343 symbols in table

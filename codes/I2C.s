@@ -17,6 +17,8 @@ I2CMCS 				EQU		0x40020004
 			EXPORT  writeToDac            	; Make available
 
 writeToDac	PROC
+	
+			PUSH {LR}
 			;Use R3 for storing data
 
 			; Set the slave address to 0x60
@@ -106,7 +108,7 @@ read_ag	    LDR     R1, =I2CMCS
             STR     R0, [R1]			
 		
 			;B		idle
-
+			POP 	{LR}
 			BX		LR	; Return
 			
 			ENDP	

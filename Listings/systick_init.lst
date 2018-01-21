@@ -24,10 +24,10 @@ ARM Macro Assembler    Page 1
    10 00000000 E000ED20 
                        SHP_SYSPRI3
                                EQU              0xE000ED20
-   11 00000000         ; 0x7D0 = 2000 -> 2000*250 ns = 500mus
-   12 00000000 000007D0 
+   11 00000000         ; 0x7D0 = 2000 -> 500*250 ns = 125mus
+   12 00000000 000001F4 
                        RELOAD_VALUE
-                               EQU              0x000007D0
+                               EQU              0x000001F4
    13 00000000         
    14 00000000                 AREA             init_isr , READONLY, CODE, ALIG
 N=2
@@ -47,12 +47,12 @@ N=2
    27 0000000A         
    28 0000000A         ; now set the time out period
    29 0000000A 490B            LDR              R1 , =NVIC_ST_RELOAD
-   30 0000000C F44F 60FA       LDR              R0 , =RELOAD_VALUE
+   30 0000000C F44F 70FA       LDR              R0 , =RELOAD_VALUE
    31 00000010 6008            STR              R0 , [R1]
    32 00000012         
    33 00000012         ; now set the time out period
    34 00000012 4909            LDR              R1 , =NVIC_ST_RELOAD
-   35 00000014 F44F 60FA       LDR              R0 , =RELOAD_VALUE
+   35 00000014 F44F 70FA       LDR              R0 , =RELOAD_VALUE
    36 00000018 6008            STR              R0 , [R1]
    37 0000001A         
    38 0000001A         ; time out period is set
@@ -151,7 +151,7 @@ Symbol: NVIC_ST_RELOAD
       At line 29 in file codes\SysTick_Init.s
       At line 34 in file codes\SysTick_Init.s
 
-RELOAD_VALUE 000007D0
+RELOAD_VALUE 000001F4
 
 Symbol: RELOAD_VALUE
    Definitions

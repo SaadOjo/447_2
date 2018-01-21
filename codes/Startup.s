@@ -332,7 +332,7 @@ PendSV_Handler  PROC
                 ENDP
 SysTick_Handler PROC
 	
-				IMPORT mySystickHandler
+				IMPORT 	mySystickHandler
                 EXPORT  SysTick_Handler           [WEAK]
 					
                 B       mySystickHandler			;Edited here
