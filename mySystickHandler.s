@@ -14,8 +14,8 @@ mySystickHandler	PUSH {LR}
 					BL	writeToDac		;
 					SUBS R5,#1			;
 					
-					POP {LR}
-return         		BX		LR					    ; Return
+return 				POP {LR}
+					BX		LR					    ; Return
 
 reset 				
 					LDR R4, =STORE_ADDR	;Initialise pointer at starting address
