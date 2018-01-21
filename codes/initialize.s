@@ -70,6 +70,7 @@ initialize	PROC
 				LDR R0, [R1]
 				BIC R0, R0, #0x08 ; clear bit 3 to disable analog on PE3
 				STR R0, [R1]
+				
 				; Enable analog on PE3
 				LDR R1, =PORTE_AMSEL
 				LDR R0, [R1]

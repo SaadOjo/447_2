@@ -32,6 +32,13 @@ playback		LDR R4,	=STORE_ADDR ;Reset the pointer address
 				MOV R5, #NO_SAMPLES ;Set the counter for writing the data
 				
 				BL	init_i2c		;
+				
+
+;loopy			BL	writeToDac		;
+;				SUB R5,#1			;
+;				CMP R5,#0			;
+;				BNE loopy			;
+					
 				BL	InitSysTick 	;
 				
 				;Should go to subroutine

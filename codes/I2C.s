@@ -1,15 +1,10 @@
 ;Register           EQU     Address
 ;----------------- -----   ------------
-RCGCGPIO		 	EQU 	0x400FE608
-RCGCI2C				EQU		0x400FE620
-GPIOAFSEL			EQU		0x40005420
-GPIOODR				EQU		0x4000550C
-GPIOPCTL			EQU     0x4000552C
-I2CMCR 				EQU		0x40020220
-I2CMTPR 			EQU		0x4002000C
-I2CMSA				EQU		0x40020000
-I2CMDR 				EQU		0x40020008
-I2CMCS 				EQU		0x40020004
+I2C1_MCR 				EQU		0x40021020
+I2C1_MTPR 				EQU		0x4002100C
+I2C1_MSA				EQU		0x40021000
+I2C1_MDR 				EQU		0x40021008
+I2C1_MCS 				EQU		0x40021004
 
 			AREA    |.text|, READONLY, CODE, ALIGN=2
 			THUMB
@@ -21,9 +16,9 @@ writeToDac	PROC
 			PUSH {LR}
 			;Use R3 for storing data
 
-			; Set the slave address to 0x60
-idle        LDR     R1, =I2CMSA 	
-            MOV     R0, #0xC0; 
+			; Set the slave address to 0x62
+idle        LDR     R1, =I2C1_MSA 	
+            MOV     R0, #0xC4; 
             STR     R0, [R1]
 			
 			;Place data (byte) to be transmitted in the data register 
@@ -31,32 +26,23 @@ idle        LDR     R1, =I2CMSA
 			
 			LDRB 	R3,[R4],#1			; Post Increment
 			LSR 	R3, #4				;Shift since we are only using 4 bits
-			LDR     R1, =I2CMDR	
+			LDR     R1, =I2C1_MDR	
             STR     R3, [R1]
 			
 			
-read_mcs	LDR     R1, =I2CMCS	
-			;Wait until busbusy is cleared
-			LDR     R2, [R1]     
-			AND     R2, #0x40;
-			CMP     R2, #0
-			BNE     read_mcs
-			
 			;Initiate a single byte transmit of the data from Master to Slave
-			LDR     R1, =I2CMCS	
+			LDR     R1, =I2C1_MCS ;
             MOV     R0, #0x03
             STR     R0, [R1]
 
-			;NOP
-			;NOP
-			;NOP
-	
 			;check busy bit
-read_again  LDR     R1, =I2CMCS	
+read_again  LDR     R1, =I2C1_MCS
 			LDR     R2, [R1]   
-			AND     R2, #0x1
+			AND     R2, #0x01
 			CMP     R2, #0
 			BNE     read_again
+			
+			
 			;check error bit  in the I2CMCS register to confirm the transmit was acknowledged
 			LDR     R2, [R1]   
 			AND     R2, #0x02
@@ -66,8 +52,9 @@ read_again  LDR     R1, =I2CMCS
 			
 write_mcs   MOV     R0, #0x04 
             STR     R0, [R1]
-			B       idle
+			;B       idle
 			;ARBLST bit=1?
+			
 error		LDR     R2, [R1]   
 			AND     R2, #0x10
 			CMP     R2, #0	
@@ -76,38 +63,38 @@ error		LDR     R2, [R1]
 			
 continue    LDRB 	R3,[R4] 			; Don't need to Post Increment (Already Done Above)
 			LSL 	R3,#4				;Shift since we are only using 4 bits
-			LDR     R1, =I2CMDR	
+			LDR     R1, =I2C1_MDR	
             STR     R3, [R1]
 			;check index
 
-			LDR     R1, =I2CMCS	
+			LDR     R1, =I2C1_MCS	
 			MOV     R0, #0x01
             STR     R0, [R1]	
 			
 			;check busy bit
-read_ag	    LDR     R1, =I2CMCS	
+read_ag	    LDR     R1, =I2C1_MCS	
 			LDR     R2, [R1]   
 			AND     R2, #0x1
 			CMP     R2, #0
 			BNE     read_ag
-			
-			LDR     R1, =I2CMCS	
-			LDR     R2, [R1]   
-			AND     R2, #0x1
-			CMP     R2, #0
 			
 			
 			;check error bit  in the I2CMCS register to confirm the transmit was acknowledged
 			LDR     R2, [R1]   
 			AND     R2, #0x02
 			CMP     R2, #0
-			BNE     idle
+			;BNE     idle
 			
-			LDR     R1, =I2CMCS	
-			MOV     R0, #0x04
-            STR     R0, [R1]			
+			;EOT? 
+			
+			;LDR     R1, =I2C1_MCS	
+			;MOV     R0, #0x00
+            ;STR     R0, [R1]
+			
+			;LDR     R1, =I2C1_MCS	
+			;MOV     R0, #0x04
+            ;STR     R0, [R1]			
 		
-			;B		idle
 			POP 	{LR}
 			BX		LR	; Return
 			

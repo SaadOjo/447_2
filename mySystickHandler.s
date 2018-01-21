@@ -12,7 +12,7 @@ mySystickHandler	PUSH {LR}
 					CMP R5,#0			;
 					BEQ	reset			;
 					BL	writeToDac		;
-					SUBS R5,#1			;
+					SUB R5,#1			;
 					
 return 				POP {LR}
 					BX		LR					    ; Return

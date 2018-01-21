@@ -24,7 +24,7 @@ ARM Macro Assembler    Page 1
    10 00000000 E000ED20 
                        SHP_SYSPRI3
                                EQU              0xE000ED20
-   11 00000000         ; 0x7D0 = 2000 -> 500*250 ns = 125mus
+   11 00000000         ; 0x7D0 = 2000 -> 500*250 ns = 125ms
    12 00000000 000001F4 
                        RELOAD_VALUE
                                EQU              0x000001F4
