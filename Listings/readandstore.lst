@@ -34,7 +34,7 @@ DONLY
    18 00000002         ;MOV R1, #0x8   ;
    19 00000002         ;STR R1,[R0]    ;
    20 00000002         
-   21 00000002 4809    POLL_AGAIN
+   21 00000002 480A    POLL_AGAIN
                                LDR              R0, =ADC0_RIS ;BUSY WAIT
    22 00000004 6801            LDR              R1, [R0]
    23 00000006 F021 0107       BIC              R1, #0x7    ; Ignore everything
@@ -42,38 +42,40 @@ DONLY
    24 0000000A 2900            CMP              R1,#0       ; Check for int
    25 0000000C D0F9            BEQ              POLL_AGAIN  ; Read Again
    26 0000000E         
-   27 0000000E 4807            LDR              R0, =ADC0_ISC ;  ; Clear the IN
+   27 0000000E 4808            LDR              R0, =ADC0_ISC ;  ; Clear the IN
                                                             T flag
    28 00000010 F04F 0108       MOV              R1, #0x8    ;
    29 00000014 6001            STR              R1,[R0]     ;
    30 00000016         
-   31 00000016 4806            LDR              R0, =ADC0_FIFO3 
+   31 00000016 4807            LDR              R0, =ADC0_FIFO3 
                                                             ; ; Read the FIF0
    32 00000018 6801            LDR              R1, [R0]    ;
    33 0000001A         
-   34 0000001A F824 1B02       STRH             R1,[R4],#2  ;Store Halfword and
-                                                             Post increment
-   35 0000001E F1A5 0501       SUB              R5,#1       ;Decrement Counter
-   36 00000022         
-   37 00000022 E8BD 4001       POP              {R0,LR}
-   38 00000026 4770            BX               LR
-   39 00000028         
-   40 00000028                 ENDP
-   41 00000028         
-   42 00000028                 ALIGN
-   43 00000028                 END
-              40038004 
+   34 0000001A EA4F 1111       LSR              R1,#4       ;Get rid of the 4 L
+                                                            SB
+   35 0000001E F804 1B01       STRB             R1,[R4],#1  ;Store byte and Pos
+                                                            t increment
+   36 00000022 F1A5 0501       SUB              R5,#1       ;Decrement Counter
+   37 00000026         
+   38 00000026 E8BD 4001       POP              {R0,LR}
+   39 0000002A 4770            BX               LR
+   40 0000002C         
+   41 0000002C                 ENDP
+   42 0000002C         
+   43 0000002C                 ALIGN
 
 
 
 ARM Macro Assembler    Page 2 
 
 
+   44 0000002C                 END
+              40038004 
               4003800C 
               400380A8 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\readandstore.d -o.\objects\readandstore.o -I.\RTE\_Ta
-rget_1 -ID:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -ID:\Ke
+rget_1 -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Ke
 il_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERS
 ION SETA 524" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\readandstore.
 lst codes\readAndStore.s

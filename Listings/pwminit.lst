@@ -189,8 +189,8 @@ ARM Macro Assembler    Page 3
               40028044 
               40028008 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
-erwork --depend=.\objects\pwminit.d -o.\objects\pwminit.o -I.\RTE\_Target_1 -ID
-:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -ID:\Keil_v5\ARM\
+erwork --depend=.\objects\pwminit.d -o.\objects\pwminit.o -I.\RTE\_Target_1 -IC
+:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Keil_v5\ARM\
 CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 5
 24" --predefine="TM4C1231H6PM SETA 1" --list=.\listings\pwminit.lst codes\pwmIn
 

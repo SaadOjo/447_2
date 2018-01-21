@@ -7,9 +7,9 @@ ARM Macro Assembler    Page 1
     1 00000000 20000400 
                        STORE_ADDR
                                EQU              0x20000400  ;
-    2 00000000 00000960 
+    2 00000000 00005DC0 
                        NO_SAMPLES
-                               EQU              2400        ;
+                               EQU              24000       ;
     3 00000000         
     4 00000000         ;LABEL   DIRECTIVES  VALUE
     5 00000000                 AREA             main,CODE,READONLY,ALIGN=2
@@ -23,7 +23,7 @@ ARM Macro Assembler    Page 1
    13 00000000 4C07            LDR              R4, =STORE_ADDR ;Initialise poi
                                                             nter at starting ad
                                                             dress
-   14 00000002 F44F 6516       MOV              R5, #NO_SAMPLES ;Initialize cou
+   14 00000002 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
                                                             nters for the numbe
                                                             r of samples
    15 00000006         
@@ -44,8 +44,8 @@ ARM Macro Assembler    Page 1
    29 00000020                 END
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
-erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -ID:\Keil
-_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -ID:\Keil_v5\ARM\CMSIS\
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\Keil
+_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 -IC:\Keil_v5\ARM\CMSIS\
 Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --
 predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
 
@@ -101,7 +101,7 @@ Comment: playback used once
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Absolute symbols
 
-NO_SAMPLES 00000960
+NO_SAMPLES 00005DC0
 
 Symbol: NO_SAMPLES
    Definitions

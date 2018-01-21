@@ -31,7 +31,8 @@ POLL_AGAIN		LDR R0, =ADC0_RIS		;BUSY WAIT
 				LDR R0, =ADC0_FIFO3;	; Read the FIF0
 				LDR R1, [R0]			;
 				
-				STRH R1,[R4],#2			;Store Halfword and Post increment
+				LSR R1,#4				;Get rid of the 4 LSB
+				STRB R1,[R4],#1			;Store byte and Post increment
 				SUB  R5,#1				;Decrement Counter
 				
 				POP {R0,LR}
