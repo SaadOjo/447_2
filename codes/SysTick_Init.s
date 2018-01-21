@@ -26,8 +26,14 @@ InitSysTick PROC
 			STR R0 , [R1]
 			
 			; now set the time out period
-			LDR R1 , =NVIC_ST_RELOAD
-			LDR R0 , =RELOAD_VALUE
+			LDR  R1 , =NVIC_ST_RELOAD
+			MOV  R0 ,#1750
+			MUL	 R6,R0
+			MOV  R0 ,#4096
+			UDIV R6,R0
+			ADD  R6,#250
+			;Process R6 and use it
+			MOV R0 , R6
 			STR R0 , [R1]
 
 			; now set the time out period

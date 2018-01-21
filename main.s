@@ -42,7 +42,6 @@ playback		LDR R4,	=STORE_ADDR ;Reset the pointer address
 ;				BNE loopy			;
 				BL initPot			;
 				BL readPot			;
-				
 				BL	InitSysTick 	;
 				
 				;Should go to subroutine

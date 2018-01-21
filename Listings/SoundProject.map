@@ -23,6 +23,7 @@ Section Cross References
     main.o(main) refers to readpot.o(readPotSubroutine) for readPot
     main.o(main) refers to systick_init.o(init_isr) for InitSysTick
     mysystickhandler.o(.text) refers to i2c.o(.text) for writeToDac
+    mysystickhandler.o(.text) refers to systick_init.o(init_isr) for InitSysTick
 
 
 ==============================================================================
@@ -63,27 +64,27 @@ Image Symbol Table
     $v0                                      0x00000288   Number         0  i2c.o(.text)
     .text                                    0x00000318   Section      148  i2cinit.o(.text)
     $v0                                      0x00000318   Number         0  i2cinit.o(.text)
-    .text                                    0x000003ac   Section       32  mysystickhandler.o(.text)
+    .text                                    0x000003ac   Section       36  mysystickhandler.o(.text)
     $v0                                      0x000003ac   Number         0  mysystickhandler.o(.text)
-    .text                                    0x000003cc   Section      180  initpot.o(.text)
-    $v0                                      0x000003cc   Number         0  initpot.o(.text)
-    .text                                    0x00000480   Section        0  heapauxi.o(.text)
-    InitializeRoutine                        0x00000488   Section      244  initialize.o(InitializeRoutine)
-    $v0                                      0x00000488   Number         0  initialize.o(InitializeRoutine)
-    checkButtonSubroutine                    0x0000057c   Section       20  checkbutton.o(checkButtonSubroutine)
-    $v0                                      0x0000057c   Number         0  checkbutton.o(checkButtonSubroutine)
-    clockChangeRoutine                       0x00000590   Section       84  clockchange.o(clockChangeRoutine)
-    $v0                                      0x00000590   Number         0  clockchange.o(clockChangeRoutine)
-    init_isr                                 0x000005e4   Section       68  systick_init.o(init_isr)
-    $v0                                      0x000005e4   Number         0  systick_init.o(init_isr)
-    main                                     0x00000628   Section       60  main.o(main)
-    $v0                                      0x00000628   Number         0  main.o(main)
-    pwmInitializeRoutine                     0x00000664   Section      208  pwminit.o(pwmInitializeRoutine)
-    $v0                                      0x00000664   Number         0  pwminit.o(pwmInitializeRoutine)
-    readAndStoreSubroutine                   0x00000734   Section       56  readandstore.o(readAndStoreSubroutine)
-    $v0                                      0x00000734   Number         0  readandstore.o(readAndStoreSubroutine)
-    readPotSubroutine                        0x0000076c   Section       56  readpot.o(readPotSubroutine)
-    $v0                                      0x0000076c   Number         0  readpot.o(readPotSubroutine)
+    .text                                    0x000003d0   Section      180  initpot.o(.text)
+    $v0                                      0x000003d0   Number         0  initpot.o(.text)
+    .text                                    0x00000484   Section        0  heapauxi.o(.text)
+    InitializeRoutine                        0x0000048c   Section      244  initialize.o(InitializeRoutine)
+    $v0                                      0x0000048c   Number         0  initialize.o(InitializeRoutine)
+    checkButtonSubroutine                    0x00000580   Section       20  checkbutton.o(checkButtonSubroutine)
+    $v0                                      0x00000580   Number         0  checkbutton.o(checkButtonSubroutine)
+    clockChangeRoutine                       0x00000594   Section       84  clockchange.o(clockChangeRoutine)
+    $v0                                      0x00000594   Number         0  clockchange.o(clockChangeRoutine)
+    init_isr                                 0x000005e8   Section       88  systick_init.o(init_isr)
+    $v0                                      0x000005e8   Number         0  systick_init.o(init_isr)
+    main                                     0x00000640   Section       60  main.o(main)
+    $v0                                      0x00000640   Number         0  main.o(main)
+    pwmInitializeRoutine                     0x0000067c   Section      208  pwminit.o(pwmInitializeRoutine)
+    $v0                                      0x0000067c   Number         0  pwminit.o(pwmInitializeRoutine)
+    readAndStoreSubroutine                   0x0000074c   Section       56  readandstore.o(readAndStoreSubroutine)
+    $v0                                      0x0000074c   Number         0  readandstore.o(readAndStoreSubroutine)
+    readPotSubroutine                        0x00000784   Section       56  readpot.o(readPotSubroutine)
+    $v0                                      0x00000784   Number         0  readpot.o(readPotSubroutine)
     STACK                                    0x20000000   Section     1024  startup.o(STACK)
     StackMem                                 0x20000000   Data           0  startup.o(STACK)
 
@@ -220,18 +221,18 @@ Image Symbol Table
     writeToDac                               0x00000289   Thumb Code   130  i2c.o(.text)
     init_i2c                                 0x00000319   Thumb Code     0  i2cinit.o(.text)
     mySystickHandler                         0x000003ad   Thumb Code     2  mysystickhandler.o(.text)
-    initPot                                  0x000003cd   Thumb Code     0  initpot.o(.text)
-    __use_two_region_memory                  0x00000481   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_escrow$2region                 0x00000483   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_expand$2region                 0x00000485   Thumb Code     2  heapauxi.o(.text)
-    initialize                               0x00000489   Thumb Code   188  initialize.o(InitializeRoutine)
-    checkButton                              0x0000057d   Thumb Code    16  checkbutton.o(checkButtonSubroutine)
-    clockChange                              0x00000591   Thumb Code    76  clockchange.o(clockChangeRoutine)
-    InitSysTick                              0x000005e5   Thumb Code    52  systick_init.o(init_isr)
-    __main                                   0x00000629   Thumb Code     0  main.o(main)
-    pwmInit                                  0x00000665   Thumb Code   156  pwminit.o(pwmInitializeRoutine)
-    readAndStore                             0x00000735   Thumb Code    44  readandstore.o(readAndStoreSubroutine)
-    readPot                                  0x0000076d   Thumb Code    40  readpot.o(readPotSubroutine)
+    initPot                                  0x000003d1   Thumb Code     0  initpot.o(.text)
+    __use_two_region_memory                  0x00000485   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_escrow$2region                 0x00000487   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_expand$2region                 0x00000489   Thumb Code     2  heapauxi.o(.text)
+    initialize                               0x0000048d   Thumb Code   188  initialize.o(InitializeRoutine)
+    checkButton                              0x00000581   Thumb Code    16  checkbutton.o(checkButtonSubroutine)
+    clockChange                              0x00000595   Thumb Code    76  clockchange.o(clockChangeRoutine)
+    InitSysTick                              0x000005e9   Thumb Code    70  systick_init.o(init_isr)
+    __main                                   0x00000641   Thumb Code     0  main.o(main)
+    pwmInit                                  0x0000067d   Thumb Code   156  pwminit.o(pwmInitializeRoutine)
+    readAndStore                             0x0000074d   Thumb Code    44  readandstore.o(readAndStoreSubroutine)
+    readPot                                  0x00000785   Thumb Code    40  readpot.o(readPotSubroutine)
 
 
 
@@ -241,37 +242,37 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00000ba4, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00000bbc, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000007a4, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000007bc, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000000   0x00000288   Code   RO            3  * RESET               startup.o
     0x00000288   0x00000288   0x00000090   Code   RO           35    .text               i2c.o
     0x00000318   0x00000318   0x00000094   Code   RO           39    .text               i2cinit.o
-    0x000003ac   0x000003ac   0x00000020   Code   RO           46    .text               mysystickhandler.o
-    0x000003cc   0x000003cc   0x000000b4   Code   RO           49    .text               initpot.o
-    0x00000480   0x00000480   0x00000006   Code   RO           58    .text               c_w.l(heapauxi.o)
-    0x00000486   0x00000486   0x00000002   PAD
-    0x00000488   0x00000488   0x000000f4   Code   RO           23    InitializeRoutine   initialize.o
-    0x0000057c   0x0000057c   0x00000014   Code   RO           31    checkButtonSubroutine  checkbutton.o
-    0x00000590   0x00000590   0x00000054   Code   RO           19    clockChangeRoutine  clockchange.o
-    0x000005e4   0x000005e4   0x00000044   Code   RO           42    init_isr            systick_init.o
-    0x00000628   0x00000628   0x0000003c   Code   RO           16  * main                main.o
-    0x00000664   0x00000664   0x000000d0   Code   RO           12    pwmInitializeRoutine  pwminit.o
-    0x00000734   0x00000734   0x00000038   Code   RO           27    readAndStoreSubroutine  readandstore.o
-    0x0000076c   0x0000076c   0x00000038   Code   RO           52    readPotSubroutine   readpot.o
+    0x000003ac   0x000003ac   0x00000024   Code   RO           46    .text               mysystickhandler.o
+    0x000003d0   0x000003d0   0x000000b4   Code   RO           49    .text               initpot.o
+    0x00000484   0x00000484   0x00000006   Code   RO           58    .text               c_w.l(heapauxi.o)
+    0x0000048a   0x0000048a   0x00000002   PAD
+    0x0000048c   0x0000048c   0x000000f4   Code   RO           23    InitializeRoutine   initialize.o
+    0x00000580   0x00000580   0x00000014   Code   RO           31    checkButtonSubroutine  checkbutton.o
+    0x00000594   0x00000594   0x00000054   Code   RO           19    clockChangeRoutine  clockchange.o
+    0x000005e8   0x000005e8   0x00000058   Code   RO           42    init_isr            systick_init.o
+    0x00000640   0x00000640   0x0000003c   Code   RO           16  * main                main.o
+    0x0000067c   0x0000067c   0x000000d0   Code   RO           12    pwmInitializeRoutine  pwminit.o
+    0x0000074c   0x0000074c   0x00000038   Code   RO           27    readAndStoreSubroutine  readandstore.o
+    0x00000784   0x00000784   0x00000038   Code   RO           52    readPotSubroutine   readpot.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x000007a4, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x000007bc, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x000007a4   0x00000400   Data   RW            1    STACK               startup.o
+    0x20000000   0x000007bc   0x00000400   Data   RW            1    STACK               startup.o
 
 
-    Execution Region ER_ZI (Exec base: 0x20000400, Load base: 0x00000ba4, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x20000400, Load base: 0x00000bbc, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
 
     **** No section assigned to this execution region ****
 
@@ -290,15 +291,15 @@ Image component sizes
        244         56          0          0          0        432   initialize.o
        180         42          0          0          0        256   initpot.o
         60          4          0          0          0        208   main.o
-        32          4          0          0          0        224   mysystickhandler.o
+        36          4          0          0          0        224   mysystickhandler.o
        208         52          0          0          0        400   pwminit.o
         56         12          0          0          0        376   readandstore.o
         56         16          0          0          0        344   readpot.o
        648        622          0       1024          0        776   startup.o
-        68         16          0          0          0        376   systick_init.o
+        88         18          0          0          0        384   systick_init.o
 
     ----------------------------------------------------------------------
-      1948        890          0       1024          0       4736   Object Totals
+      1972        892          0       1024          0       4744   Object Totals
          0          0          0          0          0          0   (incl. Generated)
          0          0          0          0          0          0   (incl. Padding)
 
@@ -328,15 +329,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      1956        890          0       1024          0       4088   Grand Totals
-      1956        890          0       1024          0       4088   ELF Image Totals
-      1956        890          0       1024          0          0   ROM Totals
+      1980        892          0       1024          0       4096   Grand Totals
+      1980        892          0       1024          0       4096   ELF Image Totals
+      1980        892          0       1024          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 1956 (   1.91kB)
+    Total RO  Size (Code + RO Data)                 1980 (   1.93kB)
     Total RW  Size (RW Data + ZI Data)              1024 (   1.00kB)
-    Total ROM Size (Code + RO Data + RW Data)       2980 (   2.91kB)
+    Total ROM Size (Code + RO Data + RW Data)       3004 (   2.93kB)
 
 ==============================================================================
 
