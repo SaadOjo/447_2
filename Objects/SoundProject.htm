@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\SoundProject.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\SoundProject.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Mon Jan 22 01:36:20 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Mon Jan 22 02:15:11 2018
 <BR><P>
 <H3>Maximum Stack Usage =          0 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -15,6 +15,7 @@ Functions with no stack information
  <LI><a href="#[7c]">Reset_Handler</a>
  <LI><a href="#[85]">init_i2c</a>
  <LI><a href="#[7e]">mySystickHandler</a>
+ <LI><a href="#[86]">initPot</a>
  <LI><a href="#[7d]">__main</a>
 </UL>
 </UL>
@@ -589,11 +590,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
-<P><STRONG><a name="[87]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[86]"></a>initPot</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, initpot.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+</UL>
 
-<P><STRONG><a name="[88]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[89]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[89]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[8a]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[8b]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
 <P><STRONG><a name="[82]"></a>initialize</STRONG> (Thumb, 188 bytes, Stack size 0 bytes, initialize.o(InitializeRoutine))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
@@ -607,17 +612,19 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
-<P><STRONG><a name="[86]"></a>InitSysTick</STRONG> (Thumb, 52 bytes, Stack size 0 bytes, systick_init.o(init_isr))
+<P><STRONG><a name="[88]"></a>InitSysTick</STRONG> (Thumb, 52 bytes, Stack size 0 bytes, systick_init.o(init_isr))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
 <P><STRONG><a name="[7d]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, main.o(main))
-<BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readAndStore
+<BR><BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readPot
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readAndStore
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initialize
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_i2c
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPot
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clockChange
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkButton
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitSysTick
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitSysTick
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmInit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
@@ -628,6 +635,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[84]"></a>readAndStore</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, readandstore.o(readAndStoreSubroutine))
+<BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+</UL>
+
+<P><STRONG><a name="[87]"></a>readPot</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, readpot.o(readPotSubroutine))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 <P>

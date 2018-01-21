@@ -20,58 +20,62 @@ ARM Macro Assembler    Page 1
    10 00000000                 EXTERN           checkButton
    11 00000000                 EXTERN           init_i2c
    12 00000000                 EXTERN           writeToDac
-   13 00000000                 IMPORT           InitSysTick
-   14 00000000                 EXPORT           __main
-   15 00000000                 ENTRY
-   16 00000000         __main
-   17 00000000 4C0B            LDR              R4, =STORE_ADDR ;Initialise poi
+   13 00000000                 EXTERN           initPot
+   14 00000000                 EXTERN           readPot
+   15 00000000                 EXTERN           InitSysTick
+   16 00000000                 EXPORT           __main
+   17 00000000                 ENTRY
+   18 00000000         __main
+   19 00000000 4C0D            LDR              R4, =STORE_ADDR ;Initialise poi
                                                             nter at starting ad
                                                             dress
-   18 00000002 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
+   20 00000002 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
                                                             nters for the numbe
                                                             r of samples
-   19 00000006         
-   20 00000006 F7FF FFFE       BL               clockChange ;Not sure if it wor
+   21 00000006         
+   22 00000006 F7FF FFFE       BL               clockChange ;Not sure if it wor
                                                             ks as intended
-   21 0000000A F7FF FFFE       BL               pwmInit
-   22 0000000E F7FF FFFE       BL               initialize
-   23 00000012         
-   24 00000012 F7FF FFFE       BL               checkButton ;BUSY WAIT
-   25 00000016         
-   26 00000016 2D00    loop1   CMP              R5,#0       ;
-   27 00000018 D002            BEQ              playback    ;
-   28 0000001A F7FF FFFE       BL               readAndStore
-   29 0000001E E7FA            B                loop1
-   30 00000020         
-   31 00000020 4C03    playback
+   23 0000000A F7FF FFFE       BL               pwmInit
+   24 0000000E F7FF FFFE       BL               initialize
+   25 00000012         
+   26 00000012 F7FF FFFE       BL               checkButton ;BUSY WAIT
+   27 00000016         
+   28 00000016 2D00    loop1   CMP              R5,#0       ;
+   29 00000018 D002            BEQ              playback    ;
+   30 0000001A F7FF FFFE       BL               readAndStore
+   31 0000001E E7FA            B                loop1
+   32 00000020         
+   33 00000020 4C05    playback
                                LDR              R4, =STORE_ADDR ;Reset the poin
                                                             ter address
-   32 00000022 F645 55C0       MOV              R5, #NO_SAMPLES ;Set the counte
+   34 00000022 F645 55C0       MOV              R5, #NO_SAMPLES ;Set the counte
                                                             r for writing the d
                                                             ata
-   33 00000026         
-   34 00000026 F7FF FFFE       BL               init_i2c    ;
-   35 0000002A         
-   36 0000002A         
-   37 0000002A         ;loopy   BL writeToDac  ;
-   38 0000002A         ;    SUB R5,#1   ;
-   39 0000002A         ;    CMP R5,#0   ;
-   40 0000002A         ;    BNE loopy   ;
-   41 0000002A         
-   42 0000002A F7FF FFFE       BL               InitSysTick ;
-   43 0000002E         
-   44 0000002E         ;Should go to subroutine
-   45 0000002E         
-   46 0000002E         
+   35 00000026         
+   36 00000026 F7FF FFFE       BL               init_i2c    ;
+   37 0000002A         
+   38 0000002A         
+   39 0000002A         ;loopy   BL writeToDac  ;
+   40 0000002A         ;    SUB R5,#1   ;
+   41 0000002A         ;    CMP R5,#0   ;
+   42 0000002A         ;    BNE loopy   ;
+   43 0000002A F7FF FFFE       BL               initPot     ;
+   44 0000002E F7FF FFFE       BL               readPot     ;
+   45 00000032         
+   46 00000032 F7FF FFFE       BL               InitSysTick ;
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   47 0000002E E7FE    DONE    B                DONE
-   48 00000030                 ALIGN
-   49 00000030                 END
+   47 00000036         
+   48 00000036         ;Should go to subroutine
+   49 00000036         
+   50 00000036         
+   51 00000036 E7FE    DONE    B                DONE
+   52 00000038                 ALIGN
+   53 00000038                 END
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\Keil
@@ -84,29 +88,29 @@ predefine="TM4C1231H6PM SETA 1" --list=.\listings\main.lst main.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-DONE 0000002E
+DONE 00000036
 
 Symbol: DONE
    Definitions
-      At line 47 in file main.s
+      At line 51 in file main.s
    Uses
-      At line 47 in file main.s
+      At line 51 in file main.s
 Comment: DONE used once
 __main 00000000
 
 Symbol: __main
    Definitions
-      At line 16 in file main.s
+      At line 18 in file main.s
    Uses
-      At line 14 in file main.s
+      At line 16 in file main.s
 Comment: __main used once
 loop1 00000016
 
 Symbol: loop1
    Definitions
-      At line 26 in file main.s
+      At line 28 in file main.s
    Uses
-      At line 29 in file main.s
+      At line 31 in file main.s
 Comment: loop1 used once
 main 00000000
 
@@ -120,9 +124,9 @@ playback 00000020
 
 Symbol: playback
    Definitions
-      At line 31 in file main.s
+      At line 33 in file main.s
    Uses
-      At line 27 in file main.s
+      At line 29 in file main.s
 Comment: playback used once
 5 symbols
 
@@ -137,8 +141,8 @@ Symbol: NO_SAMPLES
    Definitions
       At line 2 in file main.s
    Uses
-      At line 18 in file main.s
-      At line 32 in file main.s
+      At line 20 in file main.s
+      At line 34 in file main.s
 
 STORE_ADDR 20000400
 
@@ -146,8 +150,8 @@ Symbol: STORE_ADDR
    Definitions
       At line 1 in file main.s
    Uses
-      At line 17 in file main.s
-      At line 31 in file main.s
+      At line 19 in file main.s
+      At line 33 in file main.s
 
 2 symbols
 
@@ -160,9 +164,9 @@ InitSysTick 00000000
 
 Symbol: InitSysTick
    Definitions
-      At line 13 in file main.s
+      At line 15 in file main.s
    Uses
-      At line 42 in file main.s
+      At line 46 in file main.s
 Comment: InitSysTick used once
 checkButton 00000000
 
@@ -170,7 +174,7 @@ Symbol: checkButton
    Definitions
       At line 10 in file main.s
    Uses
-      At line 24 in file main.s
+      At line 26 in file main.s
 Comment: checkButton used once
 clockChange 00000000
 
@@ -178,15 +182,23 @@ Symbol: clockChange
    Definitions
       At line 8 in file main.s
    Uses
-      At line 20 in file main.s
+      At line 22 in file main.s
 Comment: clockChange used once
+initPot 00000000
+
+Symbol: initPot
+   Definitions
+      At line 13 in file main.s
+   Uses
+      At line 43 in file main.s
+Comment: initPot used once
 init_i2c 00000000
 
 Symbol: init_i2c
    Definitions
       At line 11 in file main.s
    Uses
-      At line 34 in file main.s
+      At line 36 in file main.s
 Comment: init_i2c used once
 initialize 00000000
 
@@ -194,7 +206,7 @@ Symbol: initialize
    Definitions
       At line 7 in file main.s
    Uses
-      At line 22 in file main.s
+      At line 24 in file main.s
 Comment: initialize used once
 pwmInit 00000000
 
@@ -202,19 +214,11 @@ Symbol: pwmInit
    Definitions
       At line 6 in file main.s
    Uses
-      At line 21 in file main.s
+      At line 23 in file main.s
 Comment: pwmInit used once
 readAndStore 00000000
 
 Symbol: readAndStore
-   Definitions
-      At line 9 in file main.s
-   Uses
-      At line 28 in file main.s
-Comment: readAndStore used once
-writeToDac 00000000
-
-Symbol: writeToDac
 
 
 
@@ -222,9 +226,25 @@ ARM Macro Assembler    Page 2 Alphabetic symbol ordering
 External symbols
 
    Definitions
+      At line 9 in file main.s
+   Uses
+      At line 30 in file main.s
+Comment: readAndStore used once
+readPot 00000000
+
+Symbol: readPot
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 44 in file main.s
+Comment: readPot used once
+writeToDac 00000000
+
+Symbol: writeToDac
+   Definitions
       At line 12 in file main.s
    Uses
       None
 Comment: writeToDac unused
-8 symbols
-351 symbols in table
+10 symbols
+353 symbols in table

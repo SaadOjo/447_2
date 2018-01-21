@@ -9,8 +9,10 @@ NO_SAMPLES		EQU		24000;
 				EXTERN	readAndStore
 				EXTERN	checkButton	
 				EXTERN	init_i2c
-				EXTERN	writeToDac	
-				IMPORT  InitSysTick 	
+				EXTERN	writeToDac
+				EXTERN  initPot
+				EXTERN  readPot  					
+				EXTERN  InitSysTick 	
 				EXPORT	__main
 				ENTRY				
 __main			
@@ -38,7 +40,9 @@ playback		LDR R4,	=STORE_ADDR ;Reset the pointer address
 ;				SUB R5,#1			;
 ;				CMP R5,#0			;
 ;				BNE loopy			;
-					
+				BL initPot			;
+				BL readPot			;
+				
 				BL	InitSysTick 	;
 				
 				;Should go to subroutine

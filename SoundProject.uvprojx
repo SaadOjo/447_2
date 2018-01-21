@@ -435,6 +435,16 @@
               <FileType>2</FileType>
               <FilePath>.\mySystickHandler.s</FilePath>
             </File>
+            <File>
+              <FileName>initPot.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\initPot.s</FilePath>
+            </File>
+            <File>
+              <FileName>readPot.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\readPot.s</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
