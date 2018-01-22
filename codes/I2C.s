@@ -24,7 +24,7 @@ idle        LDR     R1, =I2C1_MSA
 			;Place data (byte) to be transmitted in the data register 
 			;by writing the I2CMDR register with the desired data
 			
-			LDRB 	R3,[R4],#1			; Post Increment
+			LDRB 	R3,[R4]
 			LSR 	R3, #4				;Shift since we are only using 4 bits
 			LDR     R1, =I2C1_MDR	
             STR     R3, [R1]
@@ -61,7 +61,7 @@ error		LDR     R2, [R1]
 			BNE     write_mcs
 			;if error bit is zero
 			
-continue    LDRB 	R3,[R4] 			; Don't need to Post Increment (Already Done Above)
+continue    LDRB 	R3,[R4],#1			; Post Increment 			
 			LSL 	R3,#4				;Shift since we are only using 4 bits
 			LDR     R1, =I2C1_MDR	
             STR     R3, [R1]
