@@ -33,13 +33,12 @@ InitSysTick PROC
 			UDIV R6,R0
 			ADD  R6,#250
 			;Process R6 and use it
-			MOV R0 , R6
-			STR R0 , [R1]
+			STR R6 , [R1]
 
-			; now set the time out period
-			LDR R1 , =NVIC_ST_RELOAD
-			LDR R0 , =RELOAD_VALUE
-			STR R0 , [R1]
+			;now set the time out period
+			;LDR R1 , =NVIC_ST_RELOAD
+			;LDR R0 , =RELOAD_VALUE
+			;STR R0 , [R1]
 			
 			; time out period is set
 			; now set the current timer value to the time out value

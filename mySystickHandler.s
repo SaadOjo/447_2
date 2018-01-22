@@ -4,6 +4,7 @@ NO_SAMPLES			EQU		24000;
 					AREA    |.text|, READONLY, CODE, ALIGN=2
 					THUMB
 					
+					EXTERN  readPot
 					EXTERN  InitSysTick
 					EXTERN	writeToDac
 					EXPORT  mySystickHandler        ; Make available
@@ -21,6 +22,7 @@ return 				POP {LR}
 reset 				
 					LDR R4, =STORE_ADDR	;Initialise pointer at starting address
 					MOV	R5, #NO_SAMPLES	;Initialize counters for the number of samples
+					BL readPot			;
 					BL	InitSysTick 	;
 					;Read new playback Rate		
 					B return

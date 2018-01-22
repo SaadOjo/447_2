@@ -59,22 +59,24 @@ ARM Macro Assembler    Page 1
    40 0000002A         ;    SUB R5,#1   ;
    41 0000002A         ;    CMP R5,#0   ;
    42 0000002A         ;    BNE loopy   ;
-   43 0000002A F7FF FFFE       BL               initPot     ;
-   44 0000002E F7FF FFFE       BL               readPot     ;
-   45 00000032 F7FF FFFE       BL               InitSysTick ;
-   46 00000036         
+   43 0000002A         
+   44 0000002A F7FF FFFE       BL               initPot     ;
+   45 0000002E F7FF FFFE       BL               readPot     ;
+   46 00000032         
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   47 00000036         ;Should go to subroutine
+   47 00000032 F7FF FFFE       BL               InitSysTick ;
    48 00000036         
-   49 00000036         
-   50 00000036 E7FE    DONE    B                DONE
-   51 00000038                 ALIGN
-   52 00000038                 END
+   49 00000036         ;Should go to subroutine
+   50 00000036         
+   51 00000036         
+   52 00000036 E7FE    DONE    B                DONE
+   53 00000038                 ALIGN
+   54 00000038                 END
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Target_1 -IC:\Keil
@@ -91,9 +93,9 @@ DONE 00000036
 
 Symbol: DONE
    Definitions
-      At line 50 in file main.s
+      At line 52 in file main.s
    Uses
-      At line 50 in file main.s
+      At line 52 in file main.s
 Comment: DONE used once
 __main 00000000
 
@@ -165,7 +167,7 @@ Symbol: InitSysTick
    Definitions
       At line 15 in file main.s
    Uses
-      At line 45 in file main.s
+      At line 47 in file main.s
 Comment: InitSysTick used once
 checkButton 00000000
 
@@ -189,7 +191,7 @@ Symbol: initPot
    Definitions
       At line 13 in file main.s
    Uses
-      At line 43 in file main.s
+      At line 44 in file main.s
 Comment: initPot used once
 init_i2c 00000000
 
@@ -235,7 +237,7 @@ Symbol: readPot
    Definitions
       At line 14 in file main.s
    Uses
-      At line 44 in file main.s
+      At line 45 in file main.s
 Comment: readPot used once
 writeToDac 00000000
 

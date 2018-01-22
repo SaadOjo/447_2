@@ -15,37 +15,39 @@ ARM Macro Assembler    Page 1
 2
     5 00000000                 THUMB
     6 00000000         
-    7 00000000                 EXTERN           InitSysTick
-    8 00000000                 EXTERN           writeToDac
-    9 00000000                 EXPORT           mySystickHandler 
+    7 00000000                 EXTERN           readPot
+    8 00000000                 EXTERN           InitSysTick
+    9 00000000                 EXTERN           writeToDac
+   10 00000000                 EXPORT           mySystickHandler 
                                                             ; Make available
-   10 00000000         
-   11 00000000 B500    mySystickHandler
+   11 00000000         
+   12 00000000 B500    mySystickHandler
                                PUSH             {LR}
-   12 00000002         
-   13 00000002 2D00            CMP              R5,#0       ;
-   14 00000004 D006            BEQ              reset       ;
-   15 00000006 F7FF FFFE       BL               writeToDac  ;
-   16 0000000A F1A5 0501       SUB              R5,#1       ;
-   17 0000000E         
-   18 0000000E F85D EB04 
+   13 00000002         
+   14 00000002 2D00            CMP              R5,#0       ;
+   15 00000004 D006            BEQ              reset       ;
+   16 00000006 F7FF FFFE       BL               writeToDac  ;
+   17 0000000A F1A5 0501       SUB              R5,#1       ;
+   18 0000000E         
+   19 0000000E F85D EB04 
                        return  POP              {LR}
-   19 00000012 4770            BX               LR          ; Return
-   20 00000014         
-   21 00000014         reset
-   22 00000014 4C02            LDR              R4, =STORE_ADDR ;Initialise poi
+   20 00000012 4770            BX               LR          ; Return
+   21 00000014         
+   22 00000014         reset
+   23 00000014 4C03            LDR              R4, =STORE_ADDR ;Initialise poi
                                                             nter at starting ad
                                                             dress
-   23 00000016 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
+   24 00000016 F645 55C0       MOV              R5, #NO_SAMPLES ;Initialize cou
                                                             nters for the numbe
                                                             r of samples
-   24 0000001A F7FF FFFE       BL               InitSysTick ;
-   25 0000001E         ;Read new playback Rate  
-   26 0000001E E7F6            B                return
-   27 00000020         
-   28 00000020                 ALIGN                        ; Aligning the outp
+   25 0000001A F7FF FFFE       BL               readPot     ;
+   26 0000001E F7FF FFFE       BL               InitSysTick ;
+   27 00000022         ;Read new playback Rate  
+   28 00000022 E7F4            B                return
+   29 00000024         
+   30 00000024                 ALIGN                        ; Aligning the outp
                                                             ut binary
-   29 00000020                 END                          ; End of file
+   31 00000024                 END                          ; End of file
               20000400 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\mysystickhandler.d -o.\objects\mysystickhandler.o -I.
@@ -71,25 +73,25 @@ mySystickHandler 00000000
 
 Symbol: mySystickHandler
    Definitions
-      At line 11 in file mySystickHandler.s
+      At line 12 in file mySystickHandler.s
    Uses
-      At line 9 in file mySystickHandler.s
+      At line 10 in file mySystickHandler.s
 Comment: mySystickHandler used once
 reset 00000014
 
 Symbol: reset
    Definitions
-      At line 21 in file mySystickHandler.s
+      At line 22 in file mySystickHandler.s
    Uses
-      At line 14 in file mySystickHandler.s
+      At line 15 in file mySystickHandler.s
 Comment: reset used once
 return 0000000E
 
 Symbol: return
    Definitions
-      At line 18 in file mySystickHandler.s
+      At line 19 in file mySystickHandler.s
    Uses
-      At line 26 in file mySystickHandler.s
+      At line 28 in file mySystickHandler.s
 Comment: return used once
 4 symbols
 
@@ -104,7 +106,7 @@ Symbol: NO_SAMPLES
    Definitions
       At line 2 in file mySystickHandler.s
    Uses
-      At line 23 in file mySystickHandler.s
+      At line 24 in file mySystickHandler.s
 Comment: NO_SAMPLES used once
 STORE_ADDR 20000400
 
@@ -112,7 +114,7 @@ Symbol: STORE_ADDR
    Definitions
       At line 1 in file mySystickHandler.s
    Uses
-      At line 22 in file mySystickHandler.s
+      At line 23 in file mySystickHandler.s
 Comment: STORE_ADDR used once
 2 symbols
 
@@ -125,17 +127,25 @@ InitSysTick 00000000
 
 Symbol: InitSysTick
    Definitions
+      At line 8 in file mySystickHandler.s
+   Uses
+      At line 26 in file mySystickHandler.s
+Comment: InitSysTick used once
+readPot 00000000
+
+Symbol: readPot
+   Definitions
       At line 7 in file mySystickHandler.s
    Uses
-      At line 24 in file mySystickHandler.s
-Comment: InitSysTick used once
+      At line 25 in file mySystickHandler.s
+Comment: readPot used once
 writeToDac 00000000
 
 Symbol: writeToDac
    Definitions
-      At line 8 in file mySystickHandler.s
+      At line 9 in file mySystickHandler.s
    Uses
-      At line 15 in file mySystickHandler.s
+      At line 16 in file mySystickHandler.s
 Comment: writeToDac used once
-2 symbols
-344 symbols in table
+3 symbols
+345 symbols in table
